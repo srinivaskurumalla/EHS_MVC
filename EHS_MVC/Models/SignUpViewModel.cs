@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FakeItEasy;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,15 +25,19 @@ namespace EHS_MVC.Models
 
         public long MobileNo { get; set; }
         [Required(ErrorMessage = "Please enter your Password")]
+        [RegularExpression("^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$", ErrorMessage = "Invalid Email Id")]
+
 
         public string Password { get; set; }
 
         [Required(ErrorMessage = "please confirm your password")]
+        [Compare("Password", ErrorMessage = "Password and Confirm Password doesn't match")]
+
 
         public string  ConfirmPassword { get; set; }
 
-        public bool IsActive { get; set; }
+       
 
-        public bool IsRemember { get; set; }
+       
     }
 }

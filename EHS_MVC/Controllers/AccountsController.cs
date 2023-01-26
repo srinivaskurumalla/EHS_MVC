@@ -36,10 +36,24 @@ namespace EHS_MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
+        [HttpGet]
         public IActionResult SignUp()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignUpViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return View(model);
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

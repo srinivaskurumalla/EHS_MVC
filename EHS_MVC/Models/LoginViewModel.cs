@@ -14,5 +14,8 @@ namespace EHS_MVC.Models
 
         [Required(ErrorMessage ="please enter your password")]
         public string Password { get; set; }
+
+        [Display(Name ="Remember Me")]
+        public bool IsRemember { get; set; }
     }
 }
