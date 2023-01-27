@@ -4,14 +4,17 @@
     ViewData["Title"] = "Login";
 }
 
-<h2 class="text-center"> Login </h2>
-
-
+<h1 class="text-center box-shadow"> Login </h1>
 
 
 <div class="container">
-        <div class="row">
-            <div class="col-4 offset-4 border border-primary rounded pl-5 pr-5 pb-3"  >
+    <div class="row">
+        <div class="col-md-10 offset-1">
+            <div class="row">
+                <div class="col-md-5 align-content-xxl-start offset-0">
+                    <img src="https://img.freepik.com/premium-vector/online-registration-sign-up-with-man-sitting-near-smartphone_268404-95.jpg?w=150" />
+                </div>
+                <div class="col-md-4 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 offset-2">
                 <form asp-controller="Accounts" asp-action="Login" method="post">
                     <div class="row">
                         <div class="form-group pl-4">
@@ -38,8 +41,8 @@
                                 <input type="submit" class="btn btn-block btn-primary " value="Sign In" />
                             </div>
                             <div class="text-center">
-                                <a class="text-primary" asp-action="ForgotUsername">Forgot Username?</a>
-                                <a class="text-primary" asp-action="ForgotPassword">Forgot Password       </a>
+                               @* <a class="text-primary" asp-action="ForgotUsername">Forgot Username?</a>*@
+                                <a class="text-primary" asp-action="ForgotPassword">Forgot Password</a>
 
 
                             </div>
@@ -53,8 +56,13 @@
                 </form>
 
             </div>
+            </div>
         </div>
     </div>
+</div>
+
+
+
 
 
 
