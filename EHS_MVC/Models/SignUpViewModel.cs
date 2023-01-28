@@ -25,26 +25,24 @@ namespace EHS_MVC.Models
         [Required(ErrorMessage = "Please enter the Password")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Password is too short.")]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Password does not match")]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Please enter the Email Address")]
-        [EmailAddress(ErrorMessage = "please enter a valid email address")]
+        //[EmailAddress(ErrorMessage = "please enter a valid email address")]
         public string Email { get; set; }
 
 
         [Required]
-        [Phone]
+        //[Phone]
         public string PhoneNumber { get; set; }
         [Required]
-        [MaxLength(50)]
+        //[MaxLength(50)]
         public string FullName { get; set; }
 
-        [Required]
         public string Role { get; set; }
 
-        public bool IsActive { get; set; }
+        //public bool IsActive { get; set; }
 
-        public bool IsRemember { get; set; }
+        //public bool IsRemember { get; set; }
     }
 }

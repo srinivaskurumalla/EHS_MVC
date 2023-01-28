@@ -6,10 +6,13 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace EHS_MVC.Controllers
 {
-    
+
     public class AccountsController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -57,38 +60,77 @@ namespace EHS_MVC.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View();
+            RolesSignUpViewModel model = new RolesSignUpViewModel
+            {
+                Values = new List<SelectListItem>
+                         {
+                             new SelectListItem { Value = "Seller", Text = "Seller" },
+                             new SelectListItem { Value = "Buyer", Text = "Buyer" }
+                         }
+
+
+            };
+            return View(model);
         }
 
-        [HttpPost("Accounts/SignUp/{Role}")]
-        public async Task<IActionResult> SignUp([FromBody] SignUpViewModel signUpViewModel,string Role)
+        [HttpPost]
+        public async Task<IActionResult> SignUp([FromForm] RolesSignUpViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                using(var client = new HttpClient())
+                using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Clear();
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+
 
                     SignUpViewModel user = new SignUpViewModel
                     {
-                        UserName = signUpViewModel.UserName,
-                        FullName = signUpViewModel.FullName,
-                        Password = signUpViewModel.Password,
-                        ConfirmPassword = signUpViewModel.ConfirmPassword,
-                        Email = signUpViewModel.Email,
-                        PhoneNumber = signUpViewModel.PhoneNumber,
-                        Role = Role
+                        UserName = model.SignUpRoles.UserName,
+                        FullName = model.SignUpRoles.FullName,
+                        Password = model.SignUpRoles.Password,
+                        ConfirmPassword = model.SignUpRoles.ConfirmPassword,
+                        Email = model.SignUpRoles.Email,
+                        PhoneNumber = model.SignUpRoles.PhoneNumber,
+                        Role = model.SelectedValue
+                        
 
                     };
+                   
                     var result = await client.PostAsJsonAsync("Accounts/Register", user);
-                    if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                    if (result.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Login");
                     }
 
                 }
             }
-            return View(signUpViewModel);
+            SignUpViewModel user1 = new SignUpViewModel
+            {
+                UserName = model.SignUpRoles.UserName,
+                FullName = model.SignUpRoles.FullName,
+                Password = model.SignUpRoles.Password,
+                Email = model.SignUpRoles.Email,
+                PhoneNumber = model.SignUpRoles.PhoneNumber,
+                Role = model.SelectedValue
+
+
+            };
+            RolesSignUpViewModel model1 = new RolesSignUpViewModel
+            {
+                SignUpRoles = user1,
+                Values = new List<SelectListItem>
+                         {
+                             new SelectListItem { Value = "Seller", Text = "Seller" },
+                             new SelectListItem { Value = "Buyer", Text = "Buyer" }
+                         }
+
+
+            };
+            return View(model1);
         }
     }
 }
