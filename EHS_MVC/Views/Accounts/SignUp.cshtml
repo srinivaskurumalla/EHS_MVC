@@ -1,70 +1,85 @@
-﻿@model EHS_MVC.Models.SignUpViewModel
+﻿@model SignUpViewModel
 @{
     ViewData["Title"] = "Signup";
 }
 
-<h1>Signup</h1>
-
+<h1 class="text-center box-shadow">Create an Account</h1>
 
 <div class="container">
     <div class="row">
-        <div class="COL-6 offset-3 border border-primary rounded pl-5 pr-5 pb-5">
-            <div class="text-center">
-                <h1 class="text-info">User Registration</h1>
+        <div class="col-md-12 offset-1">
+            <div class="row">
+                <div class="col-md-4 align-content-xxl-start offset-0">
+                    <img src="https://cdn.dribbble.com/users/1206715/screenshots/6480410/home_key_logo.jpg" width="500" height="520" />
+                </div>
+                <div class="col-md-5 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 offset-2">
+                    <form asp-controller="Accounts" asp-asp-action="Login" method="post">
+                        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input type="text" asp-for="UserName" placeholder="Enter User Name" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="FullName"></label>
+                            <input type="text" asp-for="FullName" placeholder="Enter User Name" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input type="text" asp-for="Email" placeholder="Enter your Email " class="form-control" autocomplete="off" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PhoneNumber"></label>
+                            <input type="text" asp-for="PhoneNumber" placeholder="Enter Your Mobile Number" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="text" asp-for="Password" placeholder="Enter your Password" class="form-control" autocomplete="off" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input type="text" asp-for="ConfirmPassword" placeholder="Enter your Confirm Password " class="form-control" autocomplete="off" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Role"></label>
+                            <select name="Role" class="form-group" asp-for="Role">
+
+                                <option value="">--Select--</option>
+                                <option value="Seller">Seller</option>
+                                <option value="Buyer">Buyer</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="=btn btn-primary btn-lg mb-1 float-right" value="Register" />
+
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <form asp-controller="Accounts" asp-action="SignUp" method="post" asp-route-Role="Role">
-                <div asp-validation-summary="All" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="UserName"></label>
-                    <input type="text" asp-for="UserName" placeholder="Enter User Name" class="form-control" autocomplete="off" />
-                    <span asp-validation-for="UserName" class="text-bg-danger"></span>
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="FullName"></label>
-                    <input type="text" asp-for="FullName" placeholder="Enter Full Name" class="form-control" autocomplete="off" />
-                    <span asp-validation-for="FullName" class="text-bg-danger"></span>
-
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Email"></label>
-                    <input type="text" asp-for="Email" placeholder="Enter your Email " class="form-control" autocomplete="off" />
-
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="PhoneNumber"></label>
-                    <input type="text" asp-for="PhoneNumber" placeholder="Enter Your Mobile NUmber" class="form-control" autocomplete="off" />
-
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Password"></label>
-                    <input type="text" asp-for="Password" placeholder="Enter your Password" class="form-control" autocomplete="off" />
-
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword"></label>
-                    <input type="text" asp-for="ConfirmPassword" placeholder="Enter your Confirm Password " class="form-control" autocomplete="off" />
-
-                </div>
-                <div class="form-group">
-                    <label asp-for="Role"></label>
-                    <select name="Role" class="form-group" asp-for="Role" required>
-                        <option value="">Select</option>
-                        <option value="Seller">Seller</option>
-                        <option value="Buyer">Buyer</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="=btn btn-primary btn-lg mb-1 float-right" value="Register" />
-
-                </div>
-            </form>
-
         </div>
     </div>
 </div>
