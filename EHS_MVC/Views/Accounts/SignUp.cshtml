@@ -12,13 +12,19 @@
             <div class="text-center">
                 <h1 class="text-info">User Registration</h1>
             </div>
-            <form asp-controller="Actions" asp-asp-action="SignUp" method="post">
+            <form asp-controller="Accounts" asp-action="SignUp" method="post" asp-route-Role="Role">
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <div class="form-group">
                     <label asp-for="UserName"></label>
                     <input type="text" asp-for="UserName" placeholder="Enter User Name" class="form-control" autocomplete="off" />
                     <span asp-validation-for="UserName" class="text-bg-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="FullName"></label>
+                    <input type="text" asp-for="FullName" placeholder="Enter Full Name" class="form-control" autocomplete="off" />
+                    <span asp-validation-for="FullName" class="text-bg-danger"></span>
 
                 </div>
 
@@ -29,8 +35,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="MobileNo"></label>
-                    <input type="text" asp-for="MobileNo" placeholder="Enter Your Mobile NUmber" class="form-control" autocomplete="off" />
+                    <label asp-for="PhoneNumber"></label>
+                    <input type="text" asp-for="PhoneNumber" placeholder="Enter Your Mobile NUmber" class="form-control" autocomplete="off" />
 
                 </div>
 
@@ -44,6 +50,14 @@
                     <label asp-for="ConfirmPassword"></label>
                     <input type="text" asp-for="ConfirmPassword" placeholder="Enter your Confirm Password " class="form-control" autocomplete="off" />
 
+                </div>
+                <div class="form-group">
+                    <label asp-for="Role"></label>
+                    <select name="Role" class="form-group" asp-for="Role" required>
+                        <option value="">Select</option>
+                        <option value="Seller">Seller</option>
+                        <option value="Buyer">Buyer</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="=btn btn-primary btn-lg mb-1 float-right" value="Register" />

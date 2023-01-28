@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace EHS_MVC.Controllers
 {
+    
     public class AccountsController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -51,9 +54,41 @@ namespace EHS_MVC.Controllers
             return RedirectToAction("Login", "Accounts");
         }
 
+        [HttpGet]
         public IActionResult SignUp()
         {
             return View();
+        }
+
+        [HttpPost("Accounts/SignUp/{Role}")]
+        public async Task<IActionResult> SignUp([FromBody] SignUpViewModel signUpViewModel,string Role)
+        {
+            if(ModelState.IsValid)
+            {
+                using(var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+
+                    SignUpViewModel user = new SignUpViewModel
+                    {
+                        UserName = signUpViewModel.UserName,
+                        FullName = signUpViewModel.FullName,
+                        Password = signUpViewModel.Password,
+                        ConfirmPassword = signUpViewModel.ConfirmPassword,
+                        Email = signUpViewModel.Email,
+                        PhoneNumber = signUpViewModel.PhoneNumber,
+                        Role = Role
+
+                    };
+                    var result = await client.PostAsJsonAsync("Accounts/Register", user);
+                    if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        return RedirectToAction("Login");
+                    }
+
+                }
+            }
+            return View(signUpViewModel);
         }
     }
 }
