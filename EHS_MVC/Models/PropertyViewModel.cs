@@ -7,7 +7,7 @@ namespace EHS_MVC.Models
     {
         public string SelectedValue { get; set; }
         public IEnumerable<SelectListItem> Values { get; set; }
-        public List<HouseViewModel>  HouseViewModels { get; set; }
-        public List<HouseViewModel> FilterByCity { get; set; }
+        public List<SellerHouseDetailsViewModel>  HouseViewModels { get; set; }
+        public List<SellerHouseDetailsViewModel> FilterByCity { get; set; }
     }
 }

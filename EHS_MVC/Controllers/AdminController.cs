@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace EHS_MVC.Controllers
 {
+   // [IgnoreAntiforgeryToken]
+   
+
     public class AdminController : Controller
     {
         public string SelectedValue { get; set; }
@@ -23,12 +26,12 @@ namespace EHS_MVC.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> Index([FromQuery]string selectedValue = "All")
+        public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
 
         {
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
-            List<HouseViewModel> houses = new();
+            List<SellerHouseDetailsViewModel> houses = new();
 
             using (var client = new HttpClient())
             {
@@ -38,7 +41,7 @@ namespace EHS_MVC.Controllers
                 {
                     selectedValue = "All";
                 }
-               
+
 
                 var result = await client.GetAsync($"Admins/GetProperties/{selectedValue}");
 
@@ -47,9 +50,9 @@ namespace EHS_MVC.Controllers
                 {
 
 
-                    houses = await result.Content.ReadAsAsync<List<HouseViewModel>>();
+                    houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
                 }
-              
+
                 propertyViewModel = new PropertyViewModel
                 {
                     HouseViewModels = houses,
@@ -66,7 +69,93 @@ namespace EHS_MVC.Controllers
             return View(propertyViewModel);
         }
 
-       
 
+        public async Task<IActionResult> Details(int id)
+        {
+            SellerHouseDetailsViewModel house = null;
+            UserDetailsViewModel seller = null;
+            SellerDetailsDtoViewModel houseWithSellerDetails = null;
+
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var houseDetails = await client.GetAsync($"House/GetHouseById/{id}");
+               
+                // var houseAndSellerDetails = await client.GetAsync($"Seller/GetSellerDetails/{id}");
+
+
+                if (houseDetails.IsSuccessStatusCode)
+                {
+                    house = await houseDetails.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
+
+                    var sellerId = house.UserDetailsId;
+                    var sellerDetails = await client.GetAsync($"Seller/GetSellerById/{sellerId}");
+
+                    seller = await sellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+
+                  //  var result = await houseAndSellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+
+                }
+                houseWithSellerDetails = new SellerDetailsDtoViewModel
+                {
+                    HouseDetails = house,
+                    SellerDetails = seller
+                };
+                return View(houseWithSellerDetails);
+            }
+
+        }
+       
+        public async Task<IActionResult> ApproveHouse( int id)
+        {
+          
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+
+                var res = await client.PutAsync($"Admins/ApproveHouse/{id}", null);
+                if (res.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+               
+
+              
+                return BadRequest();
+            }
+        }
+
+        public async Task<IActionResult> RejectHouse(int id)
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+
+                var res = await client.PutAsync($"Admins/RejectHouse/{id}", null);
+                if (res.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
+
+
+                return BadRequest();
+            }
+        }
+
+      /*  public async Task<IActionResult> HousesByCity(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
+
+                if(res.IsSuccessStatusCode)
+                {
+                    rt
+                }
+            }
+        }*/
     }
 }

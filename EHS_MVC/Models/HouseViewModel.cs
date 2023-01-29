@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EHS_MVC.Models
 {
-    public class HouseViewModel
+    public class SellerHouseDetailsViewModel
     {
 
         public int Id { get; set; }
@@ -46,7 +46,7 @@ namespace EHS_MVC.Models
 
         //navingation property
         public UserDetailsViewModel UserDetailsViewModel { get; set; }
-        public City City { get; set; }
+        public CityViewModel CityViewModel { get; set; }
         // public int HouseImageId { get; set; }
         public ICollection<HouseImage> HouseImages { get; set; }
 
@@ -67,10 +67,10 @@ namespace EHS_MVC.Models
             //House Foreign key
             public int HouseId { get; set; }
             //navingation property
-            public HouseViewModel HouseViewModel { get; set; }
+            public SellerHouseDetailsViewModel HouseViewModel { get; set; }
         }
 
-        public class City
+        public class CityViewModel
         {
             public int Id { get; set; }
             public string CityName { get; set; }
@@ -79,7 +79,7 @@ namespace EHS_MVC.Models
             public int StateId { get; set; }
             public State State { get; set; }
 
-            public ICollection<HouseViewModel> Houses { get; set; }
+            public ICollection<SellerHouseDetailsViewModel> Houses { get; set; }
         }
         public class State
         {
@@ -87,7 +87,7 @@ namespace EHS_MVC.Models
             public string StateName { get; set; }
 
             //  public Seller seller { get; set; }
-            public ICollection<City> Cities { get; set; }
+            public ICollection<CityViewModel> Cities { get; set; }
 
         }
     

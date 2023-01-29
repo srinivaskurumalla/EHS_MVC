@@ -65,22 +65,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var house in Model.HouseViewModels)
+                @if (Model.HouseViewModels.Count > 0)
+                {
+
+
+                    foreach (var house in Model.HouseViewModels)
+                    {
+                        <tr>
+                            <td>@house.PropertyType</td>
+                            <td>@house.PropertyName</td>
+                            <td>@house.PriceRange</td>
+                            <td>@house.UserDetailsId</td>
+
+
+                            <td>
+                                <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+                                                                                              
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@house.PropertyType</td>
-                        <td>@house.PropertyName</td>
-                        <td>@house.PriceRange</td>
-                        <td>@house.UserDetailsId</td>
-
-                        
-                        <td>
-                            <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
-                            <a asp-controller="Admin" asp-action="Approve" asp-route-id="@house.Id">Approve</a> |
-                            <a asp-controller="Admin" asp-action="Reject" asp-route-id="@house.Id">Reject</a>
-
-                        </td>
-
+                        <td>No Pendng Records</td>
                     </tr>
                 }
             </tbody>
