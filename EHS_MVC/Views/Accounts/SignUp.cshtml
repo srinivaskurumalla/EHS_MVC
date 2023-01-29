@@ -1,0 +1,80 @@
+﻿@model SignUpViewModel
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<h1 class="text-center box-shadow">Create an Account</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 offset-1">
+            <div class="row">
+                <div class="col-md-4 align-content-xxl-start offset-0">
+                    <img src="https://cdn.dribbble.com/users/1206715/screenshots/6480410/home_key_logo.jpg" width="500" height="520"/>
+                </div>
+                <div class="col-md-5 align-content-xl-end border border-dark shadow-lg rounded pl-5 pr-5 pb-3 offset-2">
+                    <form asp-controller="Actions" asp-asp-action="SignUp" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="UserName"></label>
+                            <input type="text" asp-for="UserName" placeholder="Enter User Name" class="form-control"  />
+                            <span asp-validation-for="UserName" class="text-bg-danger"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input type="text" asp-for="Email" placeholder="Enter your Email " class="form-control"  />
+                            <span asp-validation-for="Email" class="text-bg-danger"></span>
+
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MobileNo"></label>
+                            <input type="text" asp-for="MobileNo" placeholder="Enter Your Mobile NUmber" class="form-control"  />
+                            <span asp-validation-for="MobileNo" class="text-bg-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="text" asp-for="Password" placeholder="Enter your Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-bg-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ConfirmPassword"></label>
+                            <input type="text" asp-for="ConfirmPassword" placeholder="Enter your Confirm Password " class="form-control" autocomplete="off" />
+                            <span asp-validation-for="ConfirmPassword" class="text-bg-danger"></span>
+
+
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="=btn btn-primary btn-lg mb-1 float-right" value="Register" />
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

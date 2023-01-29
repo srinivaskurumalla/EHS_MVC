@@ -10,19 +10,12 @@
 </head>
 <body>
     <header>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#414bb5;">
-            <!-- Container wrapper -->
-            <div class="container-fluid">
-                <!-- Toggle button -->
-                <button class="navbar-toggler" 
-                        type="button"
-                        data-mdb-toggle="collapse"
-                        data-mdb-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EHS_MVC</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <!-- Collapsible wrapper -->
@@ -71,16 +64,10 @@
                         <a class="dropdown-item" href="#">Logout</a>
                     </div>
                 </div>
-                <div class="d-flex align-items-center">
-                    <!-- Icon -->
-                    <a class="link-secondary me-3" href="#">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
+                <div class="navbar float-right">
+                    <a class="nav-link" asp-action="Login" asp-controller="Accounts">Login</a>
+                    <a class="nav-link" asp-action="SignUp" asp-controller="Accounts">SignUp</a>
 
-                    <i class="fa-solid fa-download"></i>
-                    <!-- User profile -->
-                    
-                   
                 </div>
                 <!-- Right elements -->
             </div>
