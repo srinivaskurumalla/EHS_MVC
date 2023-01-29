@@ -11,14 +11,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-4 offset-4 border border-primary rounded pl-5 pr-5 pb-3"  >
+        <div class="col-4 offset-4 border border-primary rounded pl-5 pr-5 pb-3">
             <form asp-controller="Accounts" asp-action="Login" method="post">
                 <div class="row">
                     <div class="form-group">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Username" class="form-label"></label>
-                            <input type="text" asp-for="Username"  placeholder="Enter User Name"class="form-control" />
+                            <input type="text" asp-for="Username" placeholder="Enter User Name" class="form-control" />
                             <span asp-validation-for="Username" class="text-bg-danger"></span>
                         </div>
                         <div class="form-group">
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="text-left">
-                           <h6 class="text-bg-danger">New Account <a class="text-light  btn btn-primary "> Sign Up</a></h6>
+                            <h6 class="text-bg-danger">New Account <a class="text-light  btn btn-primary "> Sign Up</a></h6>
 
                         </div>
                     </div>

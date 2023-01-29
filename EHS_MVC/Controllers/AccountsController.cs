@@ -96,10 +96,10 @@ namespace EHS_MVC.Controllers
                         Email = model.SignUpRoles.Email,
                         PhoneNumber = model.SignUpRoles.PhoneNumber,
                         Role = model.SelectedValue
-                        
+
 
                     };
-                   
+
                     var result = await client.PostAsJsonAsync("Accounts/Register", user);
                     if (result.IsSuccessStatusCode)
                     {
