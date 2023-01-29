@@ -24,15 +24,16 @@ namespace EHS_MVC.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
-
-        public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
-
+        [AcceptVerbs("GET", "POST")]
+       
+        public async Task<IActionResult> Index([FromForm] int? id,[FromForm] string selectedValue = "All")
         {
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
             List<SellerHouseDetailsViewModel> houses = new();
-
+            List<CityViewModel> cityViewModels = null;
+            List<SellerHouseDetailsViewModel> houses2 = new List<SellerHouseDetailsViewModel>();
+            List<SellerHouseDetailsViewModel> combinedHouses = null;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
@@ -45,16 +46,111 @@ namespace EHS_MVC.Controllers
 
                 var result = await client.GetAsync($"Admins/GetProperties/{selectedValue}");
 
+                var cities = await client.GetAsync("Cities/GetAllCities");
+
+                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
 
                 if (result.IsSuccessStatusCode)
                 {
 
 
                     houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                    cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                    
                 }
 
+                if (result.IsSuccessStatusCode && id != null)
+                {
+                   foreach(var h in houses)
+                    {
+                        if(h.CityId == id)
+                        {
+                            houses2.Add(h);
+                        }
+                    }
+                  //  houses2 = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                  combinedHouses= houses2;
+                }
+                else
+                {
+                    combinedHouses = houses;
+                }
+
+                /* else
+                 {
+                     houses2 = null;
+                 }
+
+                 if(houses!= null && houses2!=null)
+                 {
+                     combinedHouses = houses2;
+
+                 }
+                 else if(houses != null)
+                 {
+                     combinedHouses = houses;
+                 }
+                 else if(houses2!= null)
+                 {
+                     combinedHouses = houses2;
+                 }
+                 else
+                 {
+                     combinedHouses = new List<SellerHouseDetailsViewModel>();
+                 }*/
+                // combinedHouses = (List<SellerHouseDetailsViewModel>)houses.Concat(houses2);
+                
                 propertyViewModel = new PropertyViewModel
                 {
+                    HouseViewModels = combinedHouses,
+                    Values = new List<SelectListItem>
+                        {
+                            new SelectListItem { Value = "All", Text = "All" },
+                            new SelectListItem { Value = "Rejected", Text = "Rejected" },
+                            new SelectListItem { Value = "Approved", Text = "Approved" },
+                            new SelectListItem { Value = "Pending", Text = "Pending" }
+                        },
+                    CityViewModels = cityViewModels,
+                    CityId = id
+                   
+                    
+                };
+            }
+
+            return View(propertyViewModel);
+        }
+
+       /* [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Index2([FromQuery] int id)
+        {
+            PropertyViewModel propertyViewModel = null;
+            List<SellerHouseDetailsViewModel> houses = null;
+            List<CityViewModel> cityViewModels = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+
+                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
+                var cities = await client.GetAsync("Cities/GetAllCities");
+
+                if (cities.IsSuccessStatusCode)
+                {
+                    cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+
+                }
+                else
+                    cityViewModels = null;
+                if (res.IsSuccessStatusCode)
+                {
+                    houses = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+
+                }
+                else
+                    houses = null;
+                propertyViewModel = new PropertyViewModel
+                {
+
                     HouseViewModels = houses,
                     Values = new List<SelectListItem>
                         {
@@ -62,14 +158,15 @@ namespace EHS_MVC.Controllers
                             new SelectListItem { Value = "Rejected", Text = "Rejected" },
                             new SelectListItem { Value = "Approved", Text = "Approved" },
                             new SelectListItem { Value = "Pending", Text = "Pending" }
-                        }
+                        },
+                    CityViewModels = cityViewModels
+
                 };
-            }
 
-            return View(propertyViewModel);
-        }
-
-
+                return View(propertyViewModel);
+       }
+            }*/
+       
         public async Task<IActionResult> Details(int id)
         {
             SellerHouseDetailsViewModel house = null;
@@ -145,17 +242,6 @@ namespace EHS_MVC.Controllers
             }
         }
 
-      /*  public async Task<IActionResult> HousesByCity(int id)
-        {
-            using (var client = new HttpClient())
-            {
-                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
-
-                if(res.IsSuccessStatusCode)
-                {
-                    rt
-                }
-            }
-        }*/
+        
     }
 }
