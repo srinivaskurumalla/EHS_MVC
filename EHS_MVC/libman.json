@@ -14,5 +14,17 @@
       "library": "jqueryui@1.13.2",
       "destination": "wwwroot/css/jqueryui/"
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "bootstrap@5.2.3",
+  "destination": "wwwroot/bootstrap/"
+}
+,
+{
+  "provider": "cdnjs",
+  "library": "jquery@3.6.3",
+  "destination": "wwwroot/jquery/"
+}
+]
 }

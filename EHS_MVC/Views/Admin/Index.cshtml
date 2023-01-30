@@ -2,45 +2,13 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
 
 <h1>Index</h1>
 
 
 <div class="row">
     <div class="col-2">
-        @* <div class="row">
-
-
-        <form asp-controller="Admin" asp-action="GetAllRejected"  method="get">
-        <button class="btn btn-outline-danger m-2" type="submit" id="button-addon2">GetAllRejected</button>
-        </form>
-        </div>*@
-
-        @* <div class="row">
-        <form asp-controller="Admin" asp-action="HousesByCity" asp-route-id="id" method="get">
-        <div class="row">
-        <div class="col-7">
-        <div class="input-group mb-3">
-        <select id="genre-dropdown" name="id" class="w-75 form-select" aria-describedby="button-addon2">
-        <option value="">--Select--</option>
-        @foreach (var city in Model.CityViewModels.Distinct())
-        {
-        <option value="@city.Id">@city.CityName</option>
-        }
-        </select>
-
-        <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
-        </div>
-        </div>
-
-
-        </div>
-
-        </form>
-        *@
-        @* <form>
-        <button class="btn btn-outline-primary m-2" type="submit" id="button-addon2">GetAllApproved</button>
-        </form>*@
     </div>
 
     <div class="row">
@@ -86,7 +54,7 @@
         </div>
 
     </div>
-    <table class="table">
+    <table id="tblProperties" class="table">
         <thead>
             <tr>
                 <th>Property Type</th>
@@ -129,3 +97,13 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $('#tblProperties').DataTable();
+        });
+    </script>
+}
