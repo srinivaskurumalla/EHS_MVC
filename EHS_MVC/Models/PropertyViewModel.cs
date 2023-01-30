@@ -10,6 +10,43 @@ namespace EHS_MVC.Models
         public List<SellerHouseDetailsViewModel>  HouseViewModels { get; set; }
         public List<CityViewModel> CityViewModels  { get; set; }
         public int? CityId { get; set; }
+        public string SortOrder { get; set; }
+        public LoginViewModel LoginViewModel { get; set; }
+       
+        /*  private string sortOrder
+          {
+              set
+              {
+                  if(value == null)
+                  {
+                      SortOrder = "asc";
+                  }
+                  else
+                  {
+                      SortOrder = "dsc";
+                  }
+              }
+              get
+              {
+                  return SortOrder;
+              }
+          }*/
+        public string SortColumn { get; set; }
+       /* private string sortColumn
+        {
+            set
+            {
+                if(value == null)
+                {
+                    SortColumn = "PriceRange";
+                }
+                SortColumn = value;
+            }
+            get
+            {
+                return SortColumn;
+            }
+        }*/
 
     }
 }

@@ -42,7 +42,13 @@ namespace EHS_MVC.Controllers
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
-                        return RedirectToAction("Index", "Home");
+
+                        string userName = login.Username;
+                        HttpContext.Session.SetString("sellerName", userName);
+
+                       // TempData["UserName"] = login.Username;
+                       
+                        return RedirectToAction("Index", "House");
                     }
                     ModelState.AddModelError("", "Invalid Username or Password");
                 }
@@ -82,8 +88,6 @@ namespace EHS_MVC.Controllers
                 {
                     client.DefaultRequestHeaders.Clear();
 
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
 

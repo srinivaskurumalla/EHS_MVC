@@ -8,124 +8,124 @@
 
 <div class="row">
     <div class="col-2">
-       @* <div class="row">
+        @* <div class="row">
 
 
-            <form asp-controller="Admin" asp-action="GetAllRejected"  method="get">
-                <button class="btn btn-outline-danger m-2" type="submit" id="button-addon2">GetAllRejected</button>
+        <form asp-controller="Admin" asp-action="GetAllRejected"  method="get">
+        <button class="btn btn-outline-danger m-2" type="submit" id="button-addon2">GetAllRejected</button>
         </form>
         </div>*@
 
-       @* <div class="row">
-            <form asp-controller="Admin" asp-action="HousesByCity" asp-route-id="id" method="get">
-            <div class="row">
-                <div class="col-7">
-                    <div class="input-group mb-3">
-                    <select id="genre-dropdown" name="id" class="w-75 form-select" aria-describedby="button-addon2">
-                        <option value="">--Select--</option>
-                        @foreach (var city in Model.CityViewModels.Distinct())
-                        {
-                            <option value="@city.Id">@city.CityName</option>
-                        }
-                    </select>
-                  
-                    <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
-                </div>
-            </div>
-
-            
-            </div>
-           
-        </form>
-*@
-           @* <form>
-                <button class="btn btn-outline-primary m-2" type="submit" id="button-addon2">GetAllApproved</button>
-            </form>*@
-        </div>
-
+        @* <div class="row">
+        <form asp-controller="Admin" asp-action="HousesByCity" asp-route-id="id" method="get">
         <div class="row">
+        <div class="col-7">
+        <div class="input-group mb-3">
+        <select id="genre-dropdown" name="id" class="w-75 form-select" aria-describedby="button-addon2">
+        <option value="">--Select--</option>
+        @foreach (var city in Model.CityViewModels.Distinct())
+        {
+        <option value="@city.Id">@city.CityName</option>
+        }
+        </select>
 
-
-            <form>
-                <button class="btn btn-outline-info m-2" type="submit" id="button-addon2">GetAllPending</button>
-            </form>
+        <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
         </div>
+        </div>
+
+
+        </div>
+
+        </form>
+        *@
+        @* <form>
+        <button class="btn btn-outline-primary m-2" type="submit" id="button-addon2">GetAllApproved</button>
+        </form>*@
     </div>
-    <div class="col-md-8 mt-5">
-      
 
-      
-      
-        <form asp-controller="Admin" asp-action="Index" method="post">
-            <div class="form-group">
-                <label asp-for="SelectedValue"></label>
-                <select asp-for="SelectedValue"  asp-items="Model.Values"></select>
-            </div>
-            
-                <div class="col-7">
-                    <div class="input-group mb-3">
-                    <select id="genre-dropdown" name="id" asp-for="CityId"  class="w-75 form-select" aria-describedby="button-addon2">
-                        <option value="">--Select--</option>
-                        @foreach (var city in Model.CityViewModels.Distinct())
-                        {
-                            <option value="@city.Id">@city.CityName</option>
-                        }
-                    </select>
-                  
-                   
-                </div>
-            </div>
-            <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
+    <div class="row">
 
+
+        <form>
+            <button class="btn btn-outline-info m-2" type="submit" id="button-addon2">GetAllPending</button>
         </form>
-        
+    </div>
+</div>
+<div class="col-md-8 mt-5">
 
-        <div class="row">
-            <div class="col">
-                <h2>List of All Properties</h2>
-            </div>
-           
+
+
+
+    <form asp-controller="Admin" asp-action="Index" method="post">
+        <div class="form-group">
+            <label asp-for="SelectedValue"></label>
+            <select asp-for="SelectedValue" asp-items="Model.Values"></select>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Property Type</th>
 
-
-                    <th>Property Name</th>
-                    <th>Price Range</th>
-                    <th>Seller Details</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.HouseViewModels.Count > 0)
-                {
-
-
-                    foreach (var house in Model.HouseViewModels)
+        <div class="col-7">
+            <div class="input-group mb-3">
+                <select id="genre-dropdown" name="id" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
+                    <option value="">--Select--</option>
+                    @foreach (var city in Model.CityViewModels.Distinct())
                     {
-                        <tr>
-                            <td>@house.PropertyType</td>
-                            <td>@house.PropertyName</td>
-                            <td>@house.PriceRange</td>
-                            <td>@house.UserDetailsId</td>
-
-
-                            <td>
-                                <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
-                                                                                              
-                            </td>
-
-                        </tr>
+                        <option value="@city.Id">@city.CityName</option>
                     }
-                }
-                else
+                </select>
+
+
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
+
+    </form>
+
+
+    <div class="row">
+        <div class="col">
+            <h2>List of All Properties</h2>
+        </div>
+
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Property Type</th>
+
+
+                <th>Property Name</th>
+                <th>Price Range</th>
+                <th>Seller Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.HouseViewModels.Count > 0)
+            {
+
+
+                foreach (var house in Model.HouseViewModels)
                 {
                     <tr>
-                        <td>No Pendng Records</td>
+                        <td>@house.PropertyType</td>
+                        <td>@house.PropertyName</td>
+                        <td>@house.PriceRange</td>
+                        <td>@house.UserDetailsId</td>
+
+
+                        <td>
+                            <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+
+                        </td>
+
                     </tr>
                 }
-            </tbody>
-        </table>
-    </div>
+            }
+            else
+            {
+                <tr>
+                    <td>No Pendng Records</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

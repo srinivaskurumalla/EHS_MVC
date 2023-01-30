@@ -1,0 +1,25 @@
+﻿@model SellerHouseDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<h1 class="mt-3 text-light">white space</h1>
+<h1 class="text-center mt-4">Details</h1>
+
+
+<div class="row">
+    <div class="col-md-5">
+        <ul class="list-group">
+            <li class="list-group-item"><b>property type :</b>@Model.PropertyType</li>
+            <li class="list-group-item"><b>production name :</b>@Model.PropertyName</li>
+            <li class="list-group-item"><b>Property Option :</b>@Model.PropertyOption</li>
+            <li class="list-group-item"><b>Address :</b>@Model.Address</li>
+            <li class="list-group-item"><b>City :</b>@Model.CityId</li>
+            <li class="list-group-item"><b>Region:</b>@Model.Region</li>
+            <li class="list-group-item"><b>Landmark :</b>@Model.Landmark</li>
+            <li class="list-group-item"><b>Initial Deposit :</b>@Model.InitialDeposit</li>
+            <li class="list-group-item"><b>Price Range :</b>@Model.PriceRange</li>
+            <li class="list-group-item"><b>Upload Date :</b>@Model.UploadDate.ToShortDateString()</li>
+        </ul>
+        <a asp-controller="House" asp-action="Index">Back to List</a>
+    </div>
+</div>

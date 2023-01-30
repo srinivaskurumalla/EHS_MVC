@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+
 
 namespace EHS_MVC.Controllers
 {
@@ -23,17 +25,30 @@ namespace EHS_MVC.Controllers
         {
             _configuration = configuration;
         }
+        
+        private string _sortColumn = "PropertyName";
+        private string _sortOrder = "asc";
+
 
         [AcceptVerbs("GET", "POST")]
        
         public async Task<IActionResult> Index([FromForm] int? id,[FromForm] string selectedValue = "All")
         {
+
+
+            
+
+           
+
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
             List<SellerHouseDetailsViewModel> houses = new();
             List<CityViewModel> cityViewModels = null;
             List<SellerHouseDetailsViewModel> houses2 = new List<SellerHouseDetailsViewModel>();
-            List<SellerHouseDetailsViewModel> combinedHouses = null;
+            List<SellerHouseDetailsViewModel> combinedHouses = new List<SellerHouseDetailsViewModel>();
+
+           
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
@@ -76,96 +91,35 @@ namespace EHS_MVC.Controllers
                     combinedHouses = houses;
                 }
 
-                /* else
-                 {
-                     houses2 = null;
-                 }
+               
+              
+            }
+         
 
-                 if(houses!= null && houses2!=null)
-                 {
-                     combinedHouses = houses2;
+        
 
-                 }
-                 else if(houses != null)
-                 {
-                     combinedHouses = houses;
-                 }
-                 else if(houses2!= null)
-                 {
-                     combinedHouses = houses2;
-                 }
-                 else
-                 {
-                     combinedHouses = new List<SellerHouseDetailsViewModel>();
-                 }*/
-                // combinedHouses = (List<SellerHouseDetailsViewModel>)houses.Concat(houses2);
-                
-                propertyViewModel = new PropertyViewModel
-                {
-                    HouseViewModels = combinedHouses,
-                    Values = new List<SelectListItem>
+            propertyViewModel = new PropertyViewModel
+            {
+                HouseViewModels = combinedHouses,
+                Values = new List<SelectListItem>
                         {
                             new SelectListItem { Value = "All", Text = "All" },
                             new SelectListItem { Value = "Rejected", Text = "Rejected" },
                             new SelectListItem { Value = "Approved", Text = "Approved" },
                             new SelectListItem { Value = "Pending", Text = "Pending" }
                         },
-                    CityViewModels = cityViewModels,
-                    CityId = id
-                   
-                    
-                };
-            }
+                CityViewModels = cityViewModels,
+                CityId = id,
+             
 
+            };
+
+          
+          
             return View(propertyViewModel);
         }
 
-       /* [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> Index2([FromQuery] int id)
-        {
-            PropertyViewModel propertyViewModel = null;
-            List<SellerHouseDetailsViewModel> houses = null;
-            List<CityViewModel> cityViewModels = null;
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
-
-                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
-                var cities = await client.GetAsync("Cities/GetAllCities");
-
-                if (cities.IsSuccessStatusCode)
-                {
-                    cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
-
-                }
-                else
-                    cityViewModels = null;
-                if (res.IsSuccessStatusCode)
-                {
-                    houses = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
-
-                }
-                else
-                    houses = null;
-                propertyViewModel = new PropertyViewModel
-                {
-
-                    HouseViewModels = houses,
-                    Values = new List<SelectListItem>
-                        {
-                            new SelectListItem { Value = "All", Text = "All" },
-                            new SelectListItem { Value = "Rejected", Text = "Rejected" },
-                            new SelectListItem { Value = "Approved", Text = "Approved" },
-                            new SelectListItem { Value = "Pending", Text = "Pending" }
-                        },
-                    CityViewModels = cityViewModels
-
-                };
-
-                return View(propertyViewModel);
-       }
-            }*/
+      
        
         public async Task<IActionResult> Details(int id)
         {
@@ -242,6 +196,7 @@ namespace EHS_MVC.Controllers
             }
         }
 
-        
+       
+
     }
 }

@@ -47,6 +47,8 @@ namespace EHS_MVC.Models
         //navingation property
         public UserDetailsViewModel UserDetailsViewModel { get; set; }
         public CityViewModel CityViewModel { get; set; }
+
+        public List<CityViewModel> CityViewModels { get; set; }
         // public int HouseImageId { get; set; }
         public ICollection<HouseImage> HouseImages { get; set; }
 
