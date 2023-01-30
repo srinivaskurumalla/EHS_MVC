@@ -66,7 +66,8 @@ namespace EHS_MVC.Controllers
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
-                CityViewModels= cityViewModels,
+                CityViewModels= cityViewModels
+                
             };
 
             return View(obj);
@@ -75,8 +76,10 @@ namespace EHS_MVC.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(SellerHouseDetailsViewModel House)
+        public async Task<IActionResult> Create(SellerHouseDetailsViewModel House, [FromForm] int cityId)
         {
+            SignUpViewModel seller = new();
+            List<CityViewModel> cityViewModels = null;
             if (ModelState.IsValid)
             {
                 using (var client = new HttpClient())
@@ -85,13 +88,26 @@ namespace EHS_MVC.Controllers
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);*/
                     //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+                    House.CityId = cityId;
                     var result = await client.PostAsJsonAsync("House/CreateHouse", House);
+                    var cities = await client.GetAsync("Cities/GetAllCities");
+                    cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                     if (result.StatusCode == System.Net.HttpStatusCode.Created)
                     {
+                       // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                         return RedirectToAction("Index", "House");
+
                     }
                 }
             }
+           // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+            SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
+            {
+                UserDetailsId = seller.Id,
+                CityViewModels = cityViewModels,
+            };
+
+           // return View(obj);
 
             return View(House);
         }
