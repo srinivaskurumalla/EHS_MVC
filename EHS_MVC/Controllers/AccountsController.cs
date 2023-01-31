@@ -16,6 +16,7 @@ namespace EHS_MVC.Controllers
     public class AccountsController : Controller
     {
         private readonly IConfiguration _configuration;
+
         public AccountsController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -42,6 +43,8 @@ namespace EHS_MVC.Controllers
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
+                        HttpContext.Session.SetString("UserName", login.Username);
+                        
                         return RedirectToAction("Index", "Home");
                     }
                     ModelState.AddModelError("", "Invalid Username or Password");

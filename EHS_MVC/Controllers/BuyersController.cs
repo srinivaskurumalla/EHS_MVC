@@ -1,17 +1,20 @@
 ﻿using EHS_MVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace EHS_MVC.Controllers
 {
-    
+
     public class BuyersController : Controller
     {
         public string SelectedValue { get; set; }
+
         private readonly IConfiguration _configuration;
         public BuyersController(IConfiguration configuration)
         {
@@ -19,7 +22,7 @@ namespace EHS_MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery]string selectedValue = "All")
+        public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
         {
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
@@ -48,8 +51,8 @@ namespace EHS_MVC.Controllers
                 {
                     houses = new List<SellerHouseDetailsViewModel>();
                 }
-                
-                
+
+
 
                 propertyViewModel = new PropertyViewModel
                 {
@@ -103,5 +106,76 @@ namespace EHS_MVC.Controllers
             }
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var user = HttpContext.Session.GetString("UserName");
+                var userDetails = await client.GetAsync($"Buyers/GetUserId/{user}");
+                var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();
+                
+                BuyerCartModel buyer = new BuyerCartModel
+                {
+                    HouseId = id,
+                    UserDetaisId = userDetailsId.Id
+
+                };
+                var res = await client.PostAsJsonAsync("Buyers/AddToCart", buyer);
+                if (res.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Cart(PropertyViewModel propertyView)
+        {
+            PropertyViewModel propertyViewModel = null;
+            List<SellerHouseDetailsViewModel> ho = new();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+
+                var user = HttpContext.Session.GetString("UserName");
+                var users = HttpContext.Session.GetString("UserName");
+                var userDetails = await client.GetAsync($"Buyers/GetUserId/{users}");
+                var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();
+                var housecheck = await client.GetAsync($"Buyers/GetAllHousesforBuyer");
+                var houses = await housecheck.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                var res = await client.GetAsync($"Buyers/GetMyCart/{userDetailsId.Id}");
+                if (res.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var cartDetails = await res.Content.ReadAsAsync<List<BuyerCartModel>>();
+                    propertyViewModel = new PropertyViewModel
+                    {
+                        buyerCartModels = cartDetails,
+                        HouseViewModels= houses
+                        
+                    };
+                    return View(propertyViewModel);
+                }
+
+            }
+            propertyViewModel = new PropertyViewModel
+            {
+                HouseViewModels = new(),
+                buyerCartModels = new()
+            };
+            
+                
+
+            
+
+            return View(propertyViewModel);
+        }
+
+
     }
 }

@@ -15,10 +15,6 @@ namespace EHS_MVC.Models
         public int HouseId { get; set; }
     }
 
-    public class CartDto
-    {
-        string selectedValue { get; set; }
-
-    }
+    
     
 }

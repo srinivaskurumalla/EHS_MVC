@@ -12,7 +12,6 @@
                 <select asp-for="SelectedValue" asp-items="Model.Values" class="form-select dropdown" onchange="this.form.submit()" ;font-weight:bold"></select>
             </div>
             <div class="form-group">
-                
             </div>
         </div>
 
@@ -24,6 +23,14 @@
             <h2 class="card-header-pills mt-5">List of All Properties</h2>
         </div>
 
+    </div>
+    <div class="row">
+        <form asp-action="Cart" asp-controller="Buyers" method="get">
+            <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                View your cart
+            </button>
+        </form>
+        
     </div>
     <table class="table">
         <thead>
@@ -42,7 +49,7 @@
             @if (Model.HouseViewModels.Count > 0)
             {
 
-              
+
 
                 foreach (var house in Model.HouseViewModels)
                 {
@@ -56,6 +63,13 @@
                         <td>
                             <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
 
+                        </td>
+                        <td>
+                            <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
+                                <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                                    Add to cart
+                                </button>
+                            </form>
                         </td>
 
                     </tr>
