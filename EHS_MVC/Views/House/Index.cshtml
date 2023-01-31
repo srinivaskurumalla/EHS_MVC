@@ -2,18 +2,19 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h1 class="mt-3 text-light">white space</h1>
-<p1 class="mt-3">Welcome, You can Post/Edit/Delete property easily</p1>
 
 
-<div class="row">
-   
-    <div class="col-md-7">
+<div class="row m-5"></div>
+<div class="row mt-5">
+   <div class="col-2"></div>
+
+    <div class="col-md-8 mt-4">
+        <a asp-controller="Home" asp-action="Index" class="text-start">Go to HomePage</a>
+
         <div class="row">
             <div class="col"> <div class="col text-end">
-        <a asp-controller="Home" asp-action="Index" >Go to HomePage</a>
     </div>
-                <h2 class="mt-4">List of Your Property</h2>
+                <h3 class="mt-4">Your Properties List</h3>
             </div>
             <div class="col text-end">
                 <a asp-controller="House" asp-action="Create" class="btn btn-dark">Add new Property</a>
@@ -30,6 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @foreach (var item in Model)
                     {
                         <tr>

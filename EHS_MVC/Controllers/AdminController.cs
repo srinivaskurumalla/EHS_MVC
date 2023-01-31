@@ -1,4 +1,5 @@
 ﻿using EHS_MVC.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -13,8 +14,8 @@ using System.Threading.Tasks;
 
 namespace EHS_MVC.Controllers
 {
-   // [IgnoreAntiforgeryToken]
-   
+    // [IgnoreAntiforgeryToken]
+
 
     public class AdminController : Controller
     {
@@ -25,20 +26,16 @@ namespace EHS_MVC.Controllers
         {
             _configuration = configuration;
         }
-        
+
         private string _sortColumn = "PropertyName";
         private string _sortOrder = "asc";
 
 
         [AcceptVerbs("GET", "POST")]
-       
-        public async Task<IActionResult> Index([FromForm] int? id,[FromForm] string selectedValue = "All")
+
+        public async Task<IActionResult> Index([FromForm] int? id, [FromForm] string selectedValue = "All")
         {
-                
 
-            
-
-           
 
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
@@ -47,10 +44,14 @@ namespace EHS_MVC.Controllers
             List<SellerHouseDetailsViewModel> houses2 = new List<SellerHouseDetailsViewModel>();
             List<SellerHouseDetailsViewModel> combinedHouses = new List<SellerHouseDetailsViewModel>();
 
-           
+
 
             using (var client = new HttpClient())
             {
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 if (string.IsNullOrEmpty(selectedValue))
@@ -71,32 +72,32 @@ namespace EHS_MVC.Controllers
 
                     houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
                     cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
-                    
+
                 }
 
                 if (result.IsSuccessStatusCode && id != null)
                 {
-                   foreach(var h in houses)
+                    foreach (var h in houses)
                     {
-                        if(h.CityId == id)
+                        if (h.CityId == id)
                         {
                             houses2.Add(h);
                         }
                     }
-                  //  houses2 = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
-                  combinedHouses= houses2;
+                    //  houses2 = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                    combinedHouses = houses2;
                 }
                 else
                 {
                     combinedHouses = houses;
                 }
 
-               
-              
-            }
-         
 
-        
+
+            }
+
+
+
 
             propertyViewModel = new PropertyViewModel
             {
@@ -110,26 +111,27 @@ namespace EHS_MVC.Controllers
                         },
                 CityViewModels = cityViewModels,
                 CityId = id,
-             
+
 
             };
 
-          
-          
+
+
             return View(propertyViewModel);
         }
 
-      
-       
+
+
         public async Task<IActionResult> Details(int id)
         {
             SellerHouseDetailsViewModel house = null;
             UserDetailsViewModel seller = null;
             using (var client = new HttpClient())
             {
+
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var houseDetails = await client.GetAsync($"House/GetHouseById/{id}");
-               
+
                 // var houseAndSellerDetails = await client.GetAsync($"Seller/GetSellerDetails/{id}");
 
 
@@ -160,12 +162,16 @@ namespace EHS_MVC.Controllers
             }
 
         }
-       
-        public async Task<IActionResult> ApproveHouse( int id)
+
+        public async Task<IActionResult> ApproveHouse(int id)
         {
-          
+
             using (var client = new HttpClient())
             {
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var res = await client.PutAsync($"Admins/ApproveHouse/{id}", null);
@@ -173,9 +179,9 @@ namespace EHS_MVC.Controllers
                 {
                     return RedirectToAction("Index", "Admin");
                 }
-               
 
-              
+
+
                 return BadRequest();
             }
         }
@@ -185,6 +191,11 @@ namespace EHS_MVC.Controllers
 
             using (var client = new HttpClient())
             {
+
+
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var res = await client.PutAsync($"Admins/RejectHouse/{id}", null);
@@ -199,7 +210,7 @@ namespace EHS_MVC.Controllers
             }
         }
 
-       
+
 
     }
 }

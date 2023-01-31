@@ -6,14 +6,14 @@
     <title>@ViewData["Title"] - EHS_MVC</title>
     <link rel="stylesheet" href="~/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/Solar.css" />
-
+  @*  <link rel="stylesheet" href="~/css/Solar.css" />
+*@
    
     
 </head>
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-nav-scroll bg-info h-auto">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EHS_MVC</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,19 +22,19 @@
                 </button>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
+                       @* <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-
-                        <li class="nav-item">
+*@
+                       @* <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Accounts" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Accounts" asp-action="SignUp">SignUp</a>
-                        </li>
+                        </li>*@
                     </ul>
                     @*<partial name="_LoginPartial" />*@
                     @await Component.InvokeAsync("Login")

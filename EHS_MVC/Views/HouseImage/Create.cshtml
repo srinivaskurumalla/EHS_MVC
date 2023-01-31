@@ -1,9 +1,17 @@
 ﻿@model HouseImageViewModel
-<div class="row m-5"></div>
-<form class="mt-5" asp-controller="HouseImage" asp-action="Create" method="post" enctype="multipart/form-data">
+<div class="row m-5 "></div>
+
+
+<div class="col-4"></div>
+
+<div class="col8">
+
+    <a asp-controller="House" asp-action="Index">Back to List</a>
+
+    <form class="mt-5"  asp-controller="HouseImage" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="CoverImage"></label>
-        <input type="file" asp-for="CoverImage" />
+        <label asp-for="CoverImage">Select Image </label>
+        <input type="file" asp-for="CoverImage" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" />
         <span asp-validation-for="CoverImage"></span>
     </div>
     <div class="form-group">
@@ -16,5 +24,6 @@
         <input type="hidden" asp-for="HouseId" class="form-control" />
         <span asp-validation-for="HouseId"></span>
     </div>
-    <button type="submit">Create</button>
+    <button type="submit" class="btn btn-outline-secondary mt-2"  id="inputGroupFileAddon04">Click to Add Image</button>
 </form>
+</div>

@@ -3,10 +3,11 @@
     ViewData["Title"] = "Details";
 }
 <h1 class="mt-3 text-light">white space</h1>
-<h1 class="text-center mt-4">Details</h1>
+<h1 class="text-center mt-4 mb-5">Details of @Model.PropertyName</h1>
 
 
 <div class="row">
+    <div class="col-1"></div>
     <div class="col-md-5">
         <ul class="list-group">
             <li class="list-group-item"><b>Property type :</b>@Model.PropertyType</li>
@@ -22,12 +23,12 @@
         </ul>
         <a asp-controller="House" asp-action="Index">Back to List</a>
         </div>
-        <div class=" col-md-3">
+        <div class=" col-md-5">
          <div class=" row text-start">
                 <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
-                <a asp-controller="HouseImage" asp-action="Create" class="mb-3 btn btn-dark">Add Images</a>
+                <a asp-controller="HouseImage" asp-action="Create" class="mb-3 ml-2 btn btn-dark">Add Images</a>
                 <form asp-controller="HouseImage" asp-action="Index" asp-route-houseId="@Model.HouseId" method="get">
-                    <button class="btn btn-danger" type="submit">View Images</button>
+                    <button class="btn w-100 btn-danger" type="submit">View Images</button>
                 </form>
 @*                <a asp-controller="HouseImage" asp-route-houseid="@Model.Id" asp-action="Index" class="btn btn-dark">View Images</a>
 *@            </div>
