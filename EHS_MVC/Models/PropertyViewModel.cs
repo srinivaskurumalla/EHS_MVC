@@ -17,6 +17,8 @@ namespace EHS_MVC.Models
         public string ImageName { get; set; }
         public int HouseId { get; set; }
 
+       // public int MyProperty { get; set; }
+
         /*  private string sortOrder
           {
               set

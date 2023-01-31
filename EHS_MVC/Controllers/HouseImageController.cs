@@ -24,19 +24,30 @@ namespace EHS_MVC.Controllers
         {
             using (var client = new HttpClient())
             {
-                PropertyViewModel propertyViewModel = new();
-              //  HouseImage hm = new();
-              //  List<HouseImage> houses = new();
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                PropertyViewModel propertyViewModel = new();
+                string userName = HttpContext.Session.GetString("sellerName");
+               // var user = HttpContext.Session.GetString("sellerName");
+              //  var userDetails = await client.GetAsync($"Buyers/GetUserId/{user}");
+                //var userDetailsId = await userDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+                var userDetails = await client.GetAsync($"Buyers/GetUserId/{userName}");
+                //  HouseImage hm = new();
+                var userDetailsId = await userDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+                //  List<HouseImage> houses = new();
+               
                 var result = await client.GetAsync($"HouseImages/GetAllHouseImages");
                 if (result.IsSuccessStatusCode)
                 {
-                    string houseId = HttpContext.Session.GetString("houseId");
+                  /*  string houseId = HttpContext.Session.GetString("houseId");
                     int houseId1 = Convert.ToInt32(houseId);
+*/
+                    
 
                     propertyViewModel.HouseImages = await result.Content.ReadAsAsync<List<HouseImage>>();
+                    
                     //hm.SellerId = houseId1;
-                    propertyViewModel.HouseId = houseId1;
+                    propertyViewModel.HouseId = Convert.ToInt32(HttpContext.Session.GetString("houseId"));
+                    propertyViewModel.SellerId = userDetailsId.Id;
                     
 
                 }

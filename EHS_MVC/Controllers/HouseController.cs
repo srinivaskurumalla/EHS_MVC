@@ -124,7 +124,7 @@ namespace EHS_MVC.Controllers
                     house = await result.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
                 }
 
-
+                house.HouseId= id;
                 string houseId =  id.ToString();
                 HttpContext.Session.SetString("houseId", houseId);
 

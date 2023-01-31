@@ -26,8 +26,11 @@
          <div class=" row text-start">
                 <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
                 <a asp-controller="HouseImage" asp-action="Create" class="mb-3 btn btn-dark">Add Images</a>
-                <a asp-controller="HouseImage" asp-action="Index" class="btn btn-dark">View Images</a>
-            </div>
+                <form asp-controller="HouseImage" asp-action="Index" asp-route-houseId="@Model.HouseId" method="get">
+                    <button class="btn btn-danger" type="submit">View Images</button>
+                </form>
+@*                <a asp-controller="HouseImage" asp-route-houseid="@Model.Id" asp-action="Index" class="btn btn-dark">View Images</a>
+*@            </div>
             </div>
   
 
