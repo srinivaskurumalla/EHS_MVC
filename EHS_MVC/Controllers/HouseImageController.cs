@@ -27,13 +27,9 @@ namespace EHS_MVC.Controllers
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 PropertyViewModel propertyViewModel = new();
                 string userName = HttpContext.Session.GetString("sellerName");
-               // var user = HttpContext.Session.GetString("sellerName");
-              //  var userDetails = await client.GetAsync($"Buyers/GetUserId/{user}");
-                //var userDetailsId = await userDetails.Content.ReadAsAsync<UserDetailsViewModel>();
-                var userDetails = await client.GetAsync($"Buyers/GetUserId/{userName}");
-                //  HouseImage hm = new();
+               var userDetails = await client.GetAsync($"Buyers/GetUserId/{userName}");
+               
                 var userDetailsId = await userDetails.Content.ReadAsAsync<UserDetailsViewModel>();
-                //  List<HouseImage> houses = new();
                
                 var result = await client.GetAsync($"HouseImages/GetAllHouseImages");
                 if (result.IsSuccessStatusCode)
@@ -48,6 +44,7 @@ namespace EHS_MVC.Controllers
                     //hm.SellerId = houseId1;
                     propertyViewModel.HouseId = Convert.ToInt32(HttpContext.Session.GetString("houseId"));
                     propertyViewModel.SellerId = userDetailsId.Id;
+                   
                     
 
                 }
@@ -89,7 +86,7 @@ namespace EHS_MVC.Controllers
                 var result = await client.PostAsJsonAsync("HouseImages/CreateHouseImage", model);
                 if (result.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                   
                     return RedirectToAction("Index", "HouseImage");
 
                 }

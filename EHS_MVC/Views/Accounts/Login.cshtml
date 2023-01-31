@@ -1,49 +1,89 @@
-﻿@model LoginViewModel
-
+﻿@model LoginViewModel 
 @{
     ViewData["Title"] = "Login";
-}
+} <h2 class="mt-4" style="color:#002b36">WHITE SPACE</h2>
+<section class="background-radial-gradient overflow-hidden">
+    <style>
+                .background-radial-gradient {
+                        background-color: hsl(218, 41%, 15%);
+                        background-image: radial-gradient(650px circle at 0% 0%, hsl(218, 41%, 35%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%), radial-gradient(1250px circle at 100% 100%, hsl(218, 41%, 45%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%);
 
-<h2> Login </h2>
+        }
+
+                 #radius-shape-1 {
+                        height: 220px;
+                        width: 220px;
+                        top: -60px;
+                        left: -130px;
+                        background: radial-gradient(#44006b, #ad1fff);
+                        overflow: hidden;
+
+        }
+
+                 #radius-shape-2 {
+                        border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+                        bottom: -60px;
+                        right: -110px;
+                        width: 300px;
+                        height: 300px;
+                        background: radial-gradient(#44006b, #ad1fff);
+                        overflow: hidden;
+
+        }
+
+                 .bg-glass {
+                        background-color: hsla(0, 0%, 100%, 0.9) !important;
+                        backdrop-filter: saturate(200%) blur(25px);
+
+        }
+    </style> 
 
 
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5 ">
+        <div class="row gx-lg-5 align-items-center mb-5">
+           @* <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                    The best offer <br /><span style="color: hsl(218, 81%, 75%)">for your properties</span>
+                </h1><p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Temporibus, expedita iusto veniam atque, magni tempora mollitia
+                    dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+                    ab ipsum nisi dolorem modi. Quos?
+                </p>
+            </div>  *@
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-4 offset-4 border border-primary rounded pl-5 pr-5 pb-3">
-            <form asp-controller="Accounts" asp-action="Login" method="post">
-                <div class="row">
-                    <div class="form-group">
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Username" class="form-label"></label>
-                            <input type="text" asp-for="Username" placeholder="Enter User Name" class="form-control" />
-                            <span asp-validation-for="Username" class="text-bg-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="form-label"></label>
-                            <input type="password" asp-for="Password" placeholder="Enter Password" class="form-control" name="password" />
-                            <span asp-validation-for="Password"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-block btn-primary " value="Sign In" />
-                        </div>
-                        <div class="text-center">
-                            <a class="text-primary" asp-action="ForgotUsername">Forgot Username?</a>
-                            <a class="text-primary" asp-action="ForgotPassword">Forgot Password       </a>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>   
+                
+                <div class="card bg-body">
+                    <div class="card-body px-4 py-5 px-md-5">
+                        <h2 class="fw-bold mb-5 text-center">Login </h2>
+                        <form asp-controller="Accounts" asp-action="Login" method="post" class="form-group">
+                            <!-- Email input -->
 
+                            <div class="form-floating mb-4">
+                                <input asp-for="Username" type="text" class="form-control" placeholder="Enter the UserName">
+                                <label asp-for="Username">User Name</label>
+                                <span asp-validation-for="Username" style="color:red"></span>
+                            </div> 
+                                <!-- Password input -->
 
-                        </div>
-
-                        <div class="text-left">
-                            <h6 class="text-bg-danger">New Account <a class="text-light  btn btn-primary "> Sign Up</a></h6>
-
-                        </div>
+                                <div class="form-floating mb-4">
+                                    <input type="password" asp-for="Password" class="form-control" placeholder="Enter the Password" />
+                                    <label asp-for="Password">Password</label>
+                                    <span asp-validation-for="Password" style="color:red"></span>
+                                </div>                            
+                                <!-- Submit button -->
+                            <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                                Sign in
+                            </button>
+                        </form>
                     </div>
                 </div>
-            </form>
-
+            </div>
         </div>
     </div>
-</div>
+   
+</section>

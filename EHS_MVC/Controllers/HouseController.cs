@@ -89,6 +89,7 @@ namespace EHS_MVC.Controllers
                     //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     House.CityId = cityId;
+                    House.UploadDate= DateTime.Now;
                     var result = await client.PostAsJsonAsync("House/CreateHouse", House);
                     var cities = await client.GetAsync("Cities/GetAllCities");
                     cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();

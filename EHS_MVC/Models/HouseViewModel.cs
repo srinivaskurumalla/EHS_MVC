@@ -43,6 +43,7 @@ namespace EHS_MVC.Models
         //Seller Foreign key
         public int UserDetailsId { get; set; }
         public int CityId { get; set; }
+       
         public string CityName { get; set; }
 
         //navingation property
@@ -71,6 +72,7 @@ namespace EHS_MVC.Models
             //House Foreign key
             public int HouseId { get; set; }
         public int SellerId { get; set; }
+        public string ImageUrl { get; set; }
         //navingation property
         public SellerHouseDetailsViewModel HouseViewModel { get; set; }
         }

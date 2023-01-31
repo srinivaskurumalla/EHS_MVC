@@ -1,52 +1,102 @@
 ﻿@model RolesSignUpViewModel
-
 @{
     ViewData["Title"] = "Create";
-}
+} 
+<h2 class="mt-0 mb-0 ml-0 mr-0" style="color:#002b36">WHITE SPACE</h2>
+<section class="background-radial-gradient overflow-hidden">
+    <style>
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(200px circle at 0% 0%, hsl(218, 41%, 35%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%), radial-gradient(1250px circle at 100% 100%, hsl(218, 41%, 45%) 15%, hsl(218, 41%, 30%) 35%, hsl(218, 41%, 20%) 75%, hsl(218, 41%, 19%) 80%, transparent 100%);
+        }
 
-<h1>Sign Up</h1>
+        #radius-shape-1 {
+            height: 220px;
+            width: 220px;
+            top: -60px;
+            left: -130px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
 
-<form asp-controller="Accounts" asp-action="SignUp" method="post">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.UserName" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.UserName" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.UserName"></span>
-            </div>
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.FullName" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.FullName" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.FullName"></span>
-            </div>
+        #radius-shape-2 {
+            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+            bottom: -60px;
+            right: -110px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
 
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.Email" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.Email" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.Email"></span>
-            </div>
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.Password" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.Password" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.Password"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SelectedValue"></label>
-                <select name="selectedValue" asp-for="SelectedValue" asp-items="Model.Values"></select>
-            </div>
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.ConfirmPassword"></span>
-            </div>
-            <div class="mb-2">
-                <label asp-for="@Model.SignUpRoles.PhoneNumber" class="form-label"></label>
-                <input type="text" asp-for="@Model.SignUpRoles.PhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.SignUpRoles.PhoneNumber"></span>
-            </div>
-            <div class="mt-2 d-grid">
-                <input type="submit" class="btn btn-primary" value="Add New" />
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+
+
+
+    <div class="container px-2 py-3 px-md-3 text-center text-lg-start my-5 align-items-center ">
+        <div class="row  align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div> 
+                <div class="card bg-body align-content-center ">
+                    <div class="card-body px-8 py-5 px-md-5">
+                        <h2 class="fw-bold mb-5 text-center">Create An Account</h2>
+                        <form asp-controller="Accounts" asp-action="SignUp" method="post" class="form-group">
+                            <div class="row form-group d-flex">
+                                <div class=" col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.UserName" class="form-control" placeholder="Enter the UserName" />
+                                    <label asp-for="@Model.SignUpRoles.UserName" class="form-label " style="width:70%"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.UserName" class="text-danger"></span>
+                                </div>                                     <div class="col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.FullName" class="form-control" placeholder="Enter your Full Name" />
+                                    <label asp-for="@Model.SignUpRoles.FullName" class="form-label"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.FullName" class="text-danger"></span>
+                                </div>
+                            </div>                                 <div class="row form-group d-flex">
+                                <div class="col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.Email" class="form-control" placeholder="Enter your Email" />   
+                                    <label asp-for="@Model.SignUpRoles.Email" class="form-label"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.Email" class="text-danger"></span>
+                                </div>                                     <div class="col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.PhoneNumber" class="form-control" placeholder="Enter your  Phone Number" />                                   
+                                    <label asp-for="@Model.SignUpRoles.PhoneNumber" class="form-label"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.PhoneNumber" class="text-danger"></span>
+                                </div>
+                            </div>                                 <div class="row form-group d-flex">
+                                <div class="col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.Password" class="form-control" placeholder="Enter your PassWord" />                                   
+                                    <label asp-for="@Model.SignUpRoles.Password" class="form-label"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.Password" class="text-danger"></span>
+                                </div>                                     <div class="col form-floating mb-4">
+                                    <input type="text" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" placeholder="Enter your  Confirm PassWord" />                            
+                                    <label asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-label"></label>
+                                    <span asp-validation-for="@Model.SignUpRoles.ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>                                 <div class="form-control mb-4">
+                                <label asp-for="SelectedValue" class="form-group">Select Role</label>
+                                <select name="selectedValue" asp-for="SelectedValue" asp-items="Model.Values" class="form-select"></select>
+                            </div>
+                            <button type="submit" class="btn btn-outline-light btn-block mb-4 text-center" style="width: 100%;">
+                                Register
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</form>
+
+
+</section>
+

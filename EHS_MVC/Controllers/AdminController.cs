@@ -125,9 +125,6 @@ namespace EHS_MVC.Controllers
         {
             SellerHouseDetailsViewModel house = null;
             UserDetailsViewModel seller = null;
-            SellerDetailsDtoViewModel houseWithSellerDetails = null;
-
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
@@ -144,14 +141,20 @@ namespace EHS_MVC.Controllers
                     var sellerDetails = await client.GetAsync($"Seller/GetSellerById/{sellerId}");
 
                     seller = await sellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+                    var cityNameResult = await client.GetAsync($"Cities/GetcityById/{house.CityId}");
 
-                  //  var result = await houseAndSellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
+                    var cityName = await cityNameResult.Content.ReadAsAsync<CityViewModel>();
+
+                    house.CityName = cityName.CityName;
+
+                    //  var result = await houseAndSellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
 
                 }
-                houseWithSellerDetails = new SellerDetailsDtoViewModel
+                SellerDetailsDtoViewModel houseWithSellerDetails = new SellerDetailsDtoViewModel
                 {
                     HouseDetails = house,
-                    SellerDetails = seller
+                    SellerDetails = seller,
+
                 };
                 return View(houseWithSellerDetails);
             }

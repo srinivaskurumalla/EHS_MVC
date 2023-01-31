@@ -1,6 +1,6 @@
 ﻿@model HouseImageViewModel
-
-<form asp-controller="HouseImage" asp-action="Create" method="post" enctype="multipart/form-data">
+<div class="row m-5"></div>
+<form class="mt-5" asp-controller="HouseImage" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label asp-for="CoverImage"></label>
         <input type="file" asp-for="CoverImage" />
