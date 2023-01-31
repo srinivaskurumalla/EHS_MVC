@@ -25,7 +25,7 @@ namespace EHS_MVC.Controllers
         public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
         {
             SelectedValue = selectedValue;
-            PropertyViewModel propertyViewModel = null;
+            PropertyViewModel propertyViewModel = new();
             List<SellerHouseDetailsViewModel> houses = new();
 
             using (var client = new HttpClient())
@@ -39,32 +39,35 @@ namespace EHS_MVC.Controllers
 
 
                 var result = await client.GetAsync($"Buyers/GetHouseByType/{selectedValue}");
-
+                var tempimages = await client.GetAsync("HouseImages/GetAllHouseImages");
+               
 
                 if (result.IsSuccessStatusCode)
                 {
-
+                    var allImages = await tempimages.Content.ReadAsAsync<List<HouseImage>>();
+                    propertyViewModel.HouseImages = allImages;
 
                     houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
                 }
                 else
                 {
                     houses = new List<SellerHouseDetailsViewModel>();
+                    
                 }
 
 
 
-                propertyViewModel = new PropertyViewModel
-                {
-                    HouseViewModels = houses,
-                    Values = new List<SelectListItem>
+
+
+                propertyViewModel.HouseViewModels = houses;
+                propertyViewModel.Values = new List<SelectListItem>
                         {
                             new SelectListItem { Value = "All", Text = "All" },
                             new SelectListItem { Value = "Villa", Text = "Villa" },
                             new SelectListItem { Value = "Flat", Text = "Flat" },
                             new SelectListItem { Value = "Bungalow", Text = "Bungalow" }
-                        }
-                };
+                        };
+               
             }
 
             return View(propertyViewModel);

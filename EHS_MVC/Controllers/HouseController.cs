@@ -23,7 +23,7 @@ namespace EHS_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             //string userName = TempData["UserName"].ToString();
-            string userName = HttpContext.Session.GetString("sellerName");
+            string userName = HttpContext.Session.GetString("UserName");
             List<SellerHouseDetailsViewModel> House = new();
             using (var client = new HttpClient())
             {
@@ -46,7 +46,7 @@ namespace EHS_MVC.Controllers
             //List<SellerHouseDetailsViewModel> House = new();
             SignUpViewModel seller = new();
             List<CityViewModel> cityViewModels = null;
-            string userName = HttpContext.Session.GetString("sellerName");
+            string userName = HttpContext.Session.GetString("UserName");
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
@@ -61,13 +61,13 @@ namespace EHS_MVC.Controllers
                 }
             }
 
-            
+
             //  string userName = HttpContext.Session.GetString("sellerName");
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
-                CityViewModels= cityViewModels
-                
+                CityViewModels = cityViewModels
+
             };
 
             return View(obj);
@@ -94,20 +94,20 @@ namespace EHS_MVC.Controllers
                     cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                     if (result.StatusCode == System.Net.HttpStatusCode.Created)
                     {
-                       // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                        // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                         return RedirectToAction("Index", "House");
 
                     }
                 }
             }
-           // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+            // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
                 CityViewModels = cityViewModels,
             };
 
-           // return View(obj);
+            // return View(obj);
 
             return View(House);
         }
@@ -129,8 +129,8 @@ namespace EHS_MVC.Controllers
                     house.CityName = cityName.CityName;
                 }
 
-                house.HouseId= id;
-                string houseId =  id.ToString();
+                house.HouseId = id;
+                string houseId = id.ToString();
                 HttpContext.Session.SetString("houseId", houseId);
 
             }
@@ -150,7 +150,7 @@ namespace EHS_MVC.Controllers
                     if (result.IsSuccessStatusCode)
                     {
                         House = await result.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
-                      
+
                         //  movie.Genres = await this.GetGenres();
                         return View(House);
                     }

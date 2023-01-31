@@ -16,7 +16,6 @@ namespace EHS_MVC.Controllers
     public class AccountsController : Controller
     {
         private readonly IConfiguration _configuration;
-
         public AccountsController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -43,9 +42,29 @@ namespace EHS_MVC.Controllers
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
-                        HttpContext.Session.SetString("UserName", login.Username);
-                        
-                        return RedirectToAction("Index", "Home");
+
+                        string userName = login.Username;
+                        HttpContext.Session.SetString("UserName", userName);
+
+                        // TempData["UserName"] = login.Username;
+                        string role = await ExtractRole();
+                        if (role == "Seller")
+                        {
+
+
+                            return RedirectToAction("Index", "House");
+
+                        }
+                        else if (role == "ADMIN")
+                        {
+                            return RedirectToAction("Index", "Admin");
+
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+
+                        }
                     }
                     ModelState.AddModelError("", "Invalid Username or Password");
                 }
@@ -62,23 +81,23 @@ namespace EHS_MVC.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new System.Uri(_configuration["Apiurl:api"]);
-              //  var result = await client.GetAsync("Accounts/GetName");
+                //  var result = await client.GetAsync("Accounts/GetName");
 
                 var roleResult = await client.GetAsync("Accounts/GetRole");
-                if ( roleResult.IsSuccessStatusCode)
+                if (roleResult.IsSuccessStatusCode)
                 {
-                   // var name = await result.Content.ReadAsAsync<string>();
-                   // ViewBag.Name = name;
+                    // var name = await result.Content.ReadAsAsync<string>();
+                    // ViewBag.Name = name;
 
                     var role = await roleResult.Content.ReadAsAsync<string>();
-                   // ViewBag.Role = role;
+                    // ViewBag.Role = role;
 
 
                     return role;
                 }
                 return null;
             }
-        } 
+        }
 
         [HttpPost]
         public IActionResult LogOut()

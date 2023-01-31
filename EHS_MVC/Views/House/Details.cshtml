@@ -22,17 +22,18 @@
             <li class="list-group-item"><b>Upload Date :</b>@Model.UploadDate.ToShortDateString()</li>
         </ul>
         <a asp-controller="House" asp-action="Index">Back to List</a>
+    </div>
+    <div class=" col-md-3">
+        <div class=" row text-start">
+            <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
+            <a asp-controller="HouseImage" asp-action="Create" class="mb-3 btn btn-dark">Add Images</a>
+            <form asp-controller="HouseImage" asp-action="Index" asp-route-houseId="@Model.HouseId" method="get">
+                <button class="btn btn-danger" type="submit">View Images</button>
+            </form>
+            @*                <a asp-controller="HouseImage" asp-route-houseid="@Model.Id" asp-action="Index" class="btn btn-dark">View Images</a>
+            *@
         </div>
-        <div class=" col-md-3">
-         <div class=" row text-start">
-                <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
-                <a asp-controller="HouseImage" asp-action="Create" class="mb-3 btn btn-dark">Add Images</a>
-                <form asp-controller="HouseImage" asp-action="Index" asp-route-houseId="@Model.HouseId" method="get">
-                    <button class="btn btn-danger" type="submit">View Images</button>
-                </form>
-@*                <a asp-controller="HouseImage" asp-route-houseid="@Model.Id" asp-action="Index" class="btn btn-dark">View Images</a>
-*@            </div>
-            </div>
-  
+    </div>
+
 
 </div>

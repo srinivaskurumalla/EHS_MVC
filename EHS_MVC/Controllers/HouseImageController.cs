@@ -26,7 +26,7 @@ namespace EHS_MVC.Controllers
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 PropertyViewModel propertyViewModel = new();
-                string userName = HttpContext.Session.GetString("sellerName");
+                string userName = HttpContext.Session.GetString("UserName");
                // var user = HttpContext.Session.GetString("sellerName");
               //  var userDetails = await client.GetAsync($"Buyers/GetUserId/{user}");
                 //var userDetailsId = await userDetails.Content.ReadAsAsync<UserDetailsViewModel>();

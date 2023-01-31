@@ -30,7 +30,7 @@
                 View your cart
             </button>
         </form>
-        
+
     </div>
     <table class="table">
         <thead>
@@ -53,26 +53,36 @@
 
                 foreach (var house in Model.HouseViewModels)
                 {
-                    <tr>
-                        <td>@house.PropertyType</td>
-                        <td>@house.PropertyName</td>
-                        <td>@house.PriceRange</td>
-                        <td>@house.UserDetailsId</td>
+                    foreach (var images in Model.HouseImages)
+                    {
+                        if (images.HouseId == house.Id)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@images.ImageUrl" class="img-thumbnail"/>
+                                </td>
+                                <td>@house.PropertyType</td>
+                                <td>@house.PropertyName</td>
+                                <td>@house.PriceRange</td>
+                                <td>@house.UserDetailsId</td>
 
 
-                        <td>
-                            <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+                                <td>
+                                    <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
 
-                        </td>
-                        <td>
-                            <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
-                                <button type="submit" class="btn btn-outline-light btn-block mb-4">
-                                    Add to cart
-                                </button>
-                            </form>
-                        </td>
+                                </td>
+                                <td>
+                                    <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
+                                        <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                                            Add to cart
+                                        </button>
+                                    </form>
+                                </td>
 
-                    </tr>
+                            </tr>
+                        }
+                    }
+
                 }
 
             }

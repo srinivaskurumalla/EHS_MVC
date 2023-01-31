@@ -59,41 +59,40 @@ namespace EHS_MVC.Models
     }
 
 
-        //House Image Details
+    //House Image Details
 
-        public class HouseImage
-        {
-            public int Id { get; set; }
-            [Required]
-
-            public string CoverImageUrl { get; set; }
-            public string ImageName { get; set; }
-            //House Foreign key
-            public int HouseId { get; set; }
+    public class HouseImage
+    {
+        public int Id { get; set; }
+        public string CoverImageUrl { get; set; }
+        public string ImageName { get; set; }
+        //House Foreign key
+        public int HouseId { get; set; }
         public int SellerId { get; set; }
         //navingation property
         public SellerHouseDetailsViewModel HouseViewModel { get; set; }
-        }
+        public string ImageUrl { get; set; }
+    }
 
-        public class CityViewModel
-        {
-            public int Id { get; set; }
-            public string CityName { get; set; }
+    public class CityViewModel
+    {
+        public int Id { get; set; }
+        public string CityName { get; set; }
 
-            //Foreign key
-            public int StateId { get; set; }
-            public State State { get; set; }
+        //Foreign key
+        public int StateId { get; set; }
+        public State State { get; set; }
 
-            public ICollection<SellerHouseDetailsViewModel> Houses { get; set; }
-        }
-        public class State
-        {
-            public int Id { get; set; }
-            public string StateName { get; set; }
+        public ICollection<SellerHouseDetailsViewModel> Houses { get; set; }
+    }
+    public class State
+    {
+        public int Id { get; set; }
+        public string StateName { get; set; }
 
-            //  public Seller seller { get; set; }
-            public ICollection<CityViewModel> Cities { get; set; }
+        //  public Seller seller { get; set; }
+        public ICollection<CityViewModel> Cities { get; set; }
 
-        }
-    
+    }
+
 }
