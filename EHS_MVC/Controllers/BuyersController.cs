@@ -176,6 +176,22 @@ namespace EHS_MVC.Controllers
             return View(propertyViewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteFromCart(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var users = HttpContext.Session.GetString("UserName");
+                var userDetails = await client.GetAsync($"Buyers/GetUserId/{users}");
+                var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();
+                await client.DeleteAsync($"Buyers/DeleteFromCart/{id},{userDetailsId.Id}");
+
+
+            }
+            return RedirectToAction("Cart");
+        }
+
 
     }
 }

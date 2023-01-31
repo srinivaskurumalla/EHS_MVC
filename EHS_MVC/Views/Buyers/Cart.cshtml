@@ -52,6 +52,12 @@
                                     <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
 
                                 </td>
+                                <td>
+                                    <form asp-action="DeleteFromCart" asp-controller="Buyers" method="post" asp-route-id="@house.Id">
+                                        <button class="btn btn alert-danger">Delete</button>
+                                    </form>
+
+                                </td>
 
 
                             </tr>
