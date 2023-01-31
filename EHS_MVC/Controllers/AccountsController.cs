@@ -46,9 +46,25 @@ namespace EHS_MVC.Controllers
                         string userName = login.Username;
                         HttpContext.Session.SetString("sellerName", userName);
 
-                       // TempData["UserName"] = login.Username;
-                       
-                        return RedirectToAction("Index", "House");
+                        // TempData["UserName"] = login.Username;
+                        string role = await ExtractRole();
+                        if (role == "Seller")
+                        {
+
+
+                            return RedirectToAction("Index", "House");
+
+                        }
+                        else if(role == "ADMIN")
+                        {
+                            return RedirectToAction("Index", "Admin");
+
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+
+                        }
                     }
                     ModelState.AddModelError("", "Invalid Username or Password");
                 }
@@ -56,11 +72,38 @@ namespace EHS_MVC.Controllers
             return View(login);
         }
 
+        [NonAction]
+        public async Task<string> ExtractRole()
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new System.Uri(_configuration["Apiurl:api"]);
+              //  var result = await client.GetAsync("Accounts/GetName");
+
+                var roleResult = await client.GetAsync("Accounts/GetRole");
+                if ( roleResult.IsSuccessStatusCode)
+                {
+                   // var name = await result.Content.ReadAsAsync<string>();
+                   // ViewBag.Name = name;
+
+                    var role = await roleResult.Content.ReadAsAsync<string>();
+                   // ViewBag.Role = role;
+
+
+                    return role;
+                }
+                return null;
+            }
+        } 
+
         [HttpPost]
         public IActionResult LogOut()
         {
             HttpContext.Session.Remove("token");
-            return RedirectToAction("Login", "Accounts");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
