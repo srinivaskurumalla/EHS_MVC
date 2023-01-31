@@ -64,12 +64,13 @@ namespace EHS_MVC.Models
             public int Id { get; set; }
             [Required]
 
-            public string ImageUrl { get; set; }
+            public string CoverImageUrl { get; set; }
             public string ImageName { get; set; }
             //House Foreign key
             public int HouseId { get; set; }
-            //navingation property
-            public SellerHouseDetailsViewModel HouseViewModel { get; set; }
+        public int SellerId { get; set; }
+        //navingation property
+        public SellerHouseDetailsViewModel HouseViewModel { get; set; }
         }
 
         public class CityViewModel

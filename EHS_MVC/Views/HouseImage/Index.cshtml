@@ -1,0 +1,44 @@
+﻿@model PropertyViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="col-md-8 mt-5">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+            @foreach(var img in Model.HouseImages)
+            {
+                if (img.SellerId == Model.SellerId)
+                {
+
+                    <tr>
+                        <td>@img.Id</td>
+               
+                <td>@img.ImageName</td>
+                <td>
+                   @* <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                  *@
+@*                        <a asp-controller="HouseImage" asp-action="EditHouseImageById" class="btn btn-secondary" asp-route-id="@img.Id">Customize</a> |
+*@                        <a asp-controller="HouseImage" asp-action="DeleteHouseImageById" class="btn btn-danger" asp-route-id="@img.Id">Delete</a>
+                          
+                </td>
+                </tr>
+                }
+            }
+       
+    </tbody>
+</table>
+
+</div>

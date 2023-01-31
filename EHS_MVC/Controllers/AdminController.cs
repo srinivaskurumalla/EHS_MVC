@@ -34,7 +34,7 @@ namespace EHS_MVC.Controllers
        
         public async Task<IActionResult> Index([FromForm] int? id,[FromForm] string selectedValue = "All")
         {
-
+                
 
             
 

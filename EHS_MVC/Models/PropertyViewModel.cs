@@ -12,7 +12,11 @@ namespace EHS_MVC.Models
         public int? CityId { get; set; }
         public string SortOrder { get; set; }
         public LoginViewModel LoginViewModel { get; set; }
-       
+        public int SellerId { get; set; }
+        public List<HouseImage> HouseImages { get; set; }
+        public string ImageName { get; set; }
+        public int HouseId { get; set; }
+
         /*  private string sortOrder
           {
               set

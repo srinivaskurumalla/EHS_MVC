@@ -1,0 +1,107 @@
+﻿using EHS_MVC.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace EHS_MVC.Controllers
+{
+    public class HouseImageController : Controller
+    {
+        private readonly IConfiguration _configuration;
+
+        public HouseImageController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            using (var client = new HttpClient())
+            {
+                PropertyViewModel propertyViewModel = new();
+              //  HouseImage hm = new();
+              //  List<HouseImage> houses = new();
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync($"HouseImages/GetAllHouseImages");
+                if (result.IsSuccessStatusCode)
+                {
+                    string houseId = HttpContext.Session.GetString("houseId");
+                    int houseId1 = Convert.ToInt32(houseId);
+
+                    propertyViewModel.HouseImages = await result.Content.ReadAsAsync<List<HouseImage>>();
+                    //hm.SellerId = houseId1;
+                    propertyViewModel.HouseId = houseId1;
+                    
+
+                }
+
+                return View(propertyViewModel);
+            }
+        }
+
+        [HttpGet]
+        public  IActionResult Create()
+        {
+            HouseImageViewModel houseImageViewModel = new();
+            string houseId = HttpContext.Session.GetString("houseId");
+            int houseId1 = Convert.ToInt32(houseId);
+            houseImageViewModel.HouseId= houseId1;
+           // houseImageViewModel
+            //stopped here
+
+            return View(houseImageViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(HouseImageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", model.CoverImage.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.CoverImage.CopyToAsync(stream);
+                }
+
+                model.ImageUrl = "/images/" + model.CoverImage.FileName;
+
+                // Save the rest of the data to your database
+            }
+            using (var client = new HttpClient())
+            { client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+                var result = await client.PostAsJsonAsync("HouseImages/CreateHouseImage", model);
+                if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                    return RedirectToAction("Index", "HouseImage");
+
+                }
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteHouseImageById(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                // client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                var result = await client.DeleteAsync($"HouseImages/DeleteHouseImage/{id}");
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index","HouseImage");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Accounts");
+                }
+            }
+        }
+    }
+}

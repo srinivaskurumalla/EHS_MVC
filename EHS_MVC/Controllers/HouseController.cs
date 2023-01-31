@@ -123,6 +123,11 @@ namespace EHS_MVC.Controllers
                 {
                     house = await result.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
                 }
+
+
+                string houseId =  id.ToString();
+                HttpContext.Session.SetString("houseId", houseId);
+
             }
             return View(house);
         }
