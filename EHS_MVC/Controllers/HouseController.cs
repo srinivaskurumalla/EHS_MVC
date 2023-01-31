@@ -122,6 +122,11 @@ namespace EHS_MVC.Controllers
                 if (result.IsSuccessStatusCode)
                 {
                     house = await result.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
+                    var cityNameResult = await client.GetAsync($"Cities/GetcityById/{house.CityId}");
+
+                    var cityName = await cityNameResult.Content.ReadAsAsync<CityViewModel>();
+
+                    house.CityName = cityName.CityName;
                 }
 
                 house.HouseId= id;
