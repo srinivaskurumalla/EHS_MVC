@@ -2,97 +2,109 @@
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
 
 <h1>Index</h1>
 
 
 <div class="row">
     <div class="col-2">
-        <div class="row">
-
-
-            <form asp-controller="Admin" asp-action="GetAllRejected"  method="get">
-                <button class="btn btn-outline-danger m-2" type="submit" id="button-addon2">GetAllRejected</button>
-        </form>
-        </div>
-
-        <div class="row">
-
-
-            <form>
-                <button class="btn btn-outline-primary m-2" type="submit" id="button-addon2">GetAllApproved</button>
-            </form>
-        </div>
-
-        <div class="row">
-
-
-            <form>
-                <button class="btn btn-outline-info m-2" type="submit" id="button-addon2">GetAllPending</button>
-            </form>
-        </div>
     </div>
-    <div class="col-md-8 mt-5">
-      
 
-      
-      
-        <form asp-controller="Admin" asp-action="Index" method="get">
-            <div class="form-group">
-                <label asp-for="SelectedValue"></label>
-                <select asp-for="SelectedValue" asp-items="Model.Values"></select>
-            </div>
-            <input type="submit" value="Submit">
+    <div class="row">
+
+
+        <form>
+            <button class="btn btn-outline-info m-2" type="submit" id="button-addon2">GetAllPending</button>
         </form>
-        
-
-        <div class="row">
-            <div class="col">
-                <h2>List of All Properties</h2>
-            </div>
-           
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Property Type</th>
-
-
-                    <th>Property Name</th>
-                    <th>Price Range</th>
-                    <th>Seller Details</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.HouseViewModels.Count > 0)
-                {
-
-
-                    foreach (var house in Model.HouseViewModels)
-                    {
-                        <tr>
-                            <td>@house.PropertyType</td>
-                            <td>@house.PropertyName</td>
-                            <td>@house.PriceRange</td>
-                            <td>@house.UserDetailsId</td>
-
-
-                            <td>
-                                <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
-                                                                                              
-                            </td>
-
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td>No Pendng Records</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
+<div class="col-md-8 mt-5">
+
+
+
+
+    <form asp-controller="Admin" asp-action="Index" method="post">
+        <div class="form-group">
+            <label asp-for="SelectedValue"></label>
+            <select asp-for="SelectedValue" asp-items="Model.Values"></select>
+        </div>
+
+        <div class="col-7">
+            <div class="input-group mb-3">
+                <select id="genre-dropdown" name="id" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
+                    <option value="">--Select--</option>
+                    @foreach (var city in Model.CityViewModels.Distinct())
+                    {
+                        <option value="@city.Id">@city.CityName</option>
+                    }
+                </select>
+
+
+            </div>
+        </div>
+        <button class="btn btn-success" type="submit" id="button-addon2">Filter</button>
+
+    </form>
+
+
+    <div class="row">
+        <div class="col">
+            <h2>List of All Properties</h2>
+        </div>
+
+    </div>
+    <table id="tblProperties" class="table table-bordered">
+        <thead class="bg-gradient">
+            <tr style="border-color:aqua; background-color:aqua">
+                <th>Property Type</th>
+
+
+                <th>Property Name</th>
+                <th>Price Range</th>
+               <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.HouseViewModels.Count > 0)
+            {
+
+
+                foreach (var house in Model.HouseViewModels)
+                {
+                    <tr>
+                        <td>@house.PropertyType</td>
+                        <td>@house.PropertyName</td>
+                        <td>@house.PriceRange</td>
+                       
+                        <td>@house.Status</td>
+
+
+                        <td>
+                            <a asp-controller="Admin" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No Pendng Records</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $('#tblProperties').DataTable();
+        });
+    </script>
+}

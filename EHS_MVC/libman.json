@@ -13,6 +13,6 @@
     {
       "library": "jquery-validate@1.19.5",
       "destination": "wwwroot/jquery-validate/"
-    }
-  ]
+}
+]
 }

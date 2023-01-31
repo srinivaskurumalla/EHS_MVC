@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SellerHouseDetailsViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1 class="mt-3 text-light">white space</h1>
+<p1 class="mt-3">Welcome, You can Post/Edit/Delete property easily</p1>
+
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col">
+                <h2 class="mt-4">List of Your Property</h2>
+            </div>
+            <div class="col text-end">
+                <a asp-controller="House" asp-action="Create" class="btn btn-dark">Add new Property</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-hover shadow">
+                <thead>
+                    <tr>
+                        <th>Property Name</th>
+                        <th>Property type</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.PropertyName</td>
+                            <td>@item.PropertyType</td>
+                            <td>@item.Status</td>
+                            <td>
+                                <a asp-controller="House" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-controller="House" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
+                                <a asp-controller="House" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

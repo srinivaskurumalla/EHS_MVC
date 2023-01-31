@@ -47,8 +47,11 @@ namespace EHS_MVC.Models
         //navingation property
         public UserDetailsViewModel UserDetailsViewModel { get; set; }
         public CityViewModel CityViewModel { get; set; }
+
+        public List<CityViewModel> CityViewModels { get; set; }
         // public int HouseImageId { get; set; }
         public ICollection<HouseImage> HouseImages { get; set; }
+        public int HouseId { get; set; }
 
         public string Status { get; set; }
 
@@ -62,12 +65,13 @@ namespace EHS_MVC.Models
             public int Id { get; set; }
             [Required]
 
-            public string ImageUrl { get; set; }
+            public string CoverImageUrl { get; set; }
             public string ImageName { get; set; }
             //House Foreign key
             public int HouseId { get; set; }
-            //navingation property
-            public SellerHouseDetailsViewModel HouseViewModel { get; set; }
+        public int SellerId { get; set; }
+        //navingation property
+        public SellerHouseDetailsViewModel HouseViewModel { get; set; }
         }
 
         public class CityViewModel

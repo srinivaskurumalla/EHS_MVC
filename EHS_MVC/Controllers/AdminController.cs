@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+
 
 namespace EHS_MVC.Controllers
 {
@@ -23,15 +25,29 @@ namespace EHS_MVC.Controllers
         {
             _configuration = configuration;
         }
+        
+        private string _sortColumn = "PropertyName";
+        private string _sortOrder = "asc";
 
-        [HttpGet]
 
-        public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
-
+        [AcceptVerbs("GET", "POST")]
+       
+        public async Task<IActionResult> Index([FromForm] int? id,[FromForm] string selectedValue = "All")
         {
+                
+
+            
+
+           
+
             SelectedValue = selectedValue;
             PropertyViewModel propertyViewModel = null;
             List<SellerHouseDetailsViewModel> houses = new();
+            List<CityViewModel> cityViewModels = null;
+            List<SellerHouseDetailsViewModel> houses2 = new List<SellerHouseDetailsViewModel>();
+            List<SellerHouseDetailsViewModel> combinedHouses = new List<SellerHouseDetailsViewModel>();
+
+           
 
             using (var client = new HttpClient())
             {
@@ -45,31 +61,66 @@ namespace EHS_MVC.Controllers
 
                 var result = await client.GetAsync($"Admins/GetProperties/{selectedValue}");
 
+                var cities = await client.GetAsync("Cities/GetAllCities");
+
+                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
 
                 if (result.IsSuccessStatusCode)
                 {
 
 
                     houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                    cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                    
                 }
 
-                propertyViewModel = new PropertyViewModel
+                if (result.IsSuccessStatusCode && id != null)
                 {
-                    HouseViewModels = houses,
-                    Values = new List<SelectListItem>
+                   foreach(var h in houses)
+                    {
+                        if(h.CityId == id)
+                        {
+                            houses2.Add(h);
+                        }
+                    }
+                  //  houses2 = await res.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                  combinedHouses= houses2;
+                }
+                else
+                {
+                    combinedHouses = houses;
+                }
+
+               
+              
+            }
+         
+
+        
+
+            propertyViewModel = new PropertyViewModel
+            {
+                HouseViewModels = combinedHouses,
+                Values = new List<SelectListItem>
                         {
                             new SelectListItem { Value = "All", Text = "All" },
                             new SelectListItem { Value = "Rejected", Text = "Rejected" },
                             new SelectListItem { Value = "Approved", Text = "Approved" },
                             new SelectListItem { Value = "Pending", Text = "Pending" }
-                        }
-                };
-            }
+                        },
+                CityViewModels = cityViewModels,
+                CityId = id,
+             
 
+            };
+
+          
+          
             return View(propertyViewModel);
         }
 
-
+      
+       
         public async Task<IActionResult> Details(int id)
         {
             SellerHouseDetailsViewModel house = null;
@@ -145,17 +196,7 @@ namespace EHS_MVC.Controllers
             }
         }
 
-      /*  public async Task<IActionResult> HousesByCity(int id)
-        {
-            using (var client = new HttpClient())
-            {
-                var res = await client.GetAsync($"House/GetHousesByCityId/{id}");
+       
 
-                if(res.IsSuccessStatusCode)
-                {
-                    rt
-                }
-            }
-        }*/
     }
 }
