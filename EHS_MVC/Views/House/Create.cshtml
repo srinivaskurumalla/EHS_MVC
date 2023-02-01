@@ -88,14 +88,14 @@
 
 
                         @* testing of city and states*@
-                        <label for="states">States:</label>
+                       @* <label for="states">States:</label>
                         <select id="states" class="form-control">
                             <option value="">--Select State--</option>
                             @foreach (var state in Model.StateViewModels.Distinct())
                             {
                                 <option value="@state.Id">@state.StateName</option>
                             }
-                        </select>
+                        </select>*@
 
                         @*  <div class="form-group">
                         <label for="cities">Cities:</label>
@@ -152,7 +152,12 @@
         </div>
     </div>
 </div>
+@section Scripts{
 
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
 @*
 <script>
     $(document).ready(function () {

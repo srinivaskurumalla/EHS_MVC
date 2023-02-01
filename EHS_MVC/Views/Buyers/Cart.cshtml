@@ -1,0 +1,97 @@
+﻿@model PropertyViewModel
+@{
+    ViewData["Title"] = "Cart";
+    var flag = true;
+}
+
+<h1 class="mt-4" style="color:#002b36">WHITE SPACES</h1>
+<div class="row">
+
+    <div class="row">
+        <div class="col">
+            <h2 class="card-header-pills mt-5">List of All Properties In Your Cart</h2>
+        </div>
+
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Property Type</th>
+                <th>Property Name</th>
+                <th>Price Range</th>
+                <th>Seller Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @if (Model.buyerCartModels.Count > 0)
+            {
+
+
+                foreach (var carts in Model.buyerCartModels)
+                {
+                    foreach (var house in Model.HouseViewModels)
+                    {
+                        if (carts.HouseId == house.Id)
+                        {
+                            foreach (var img in Model.HouseImages)
+                            {
+                                if (img.HouseId == house.Id)
+                                {
+
+
+
+                                    flag = false;
+
+
+                                    <tr>
+                                        <td>
+                                            <img src="@img.ImageUrl">
+                                        </td>
+                                        <td>@house.PropertyType</td>
+                                        <td>@house.PropertyName</td>
+                                        <td>@house.PriceRange</td>
+                                        <td>@house.UserDetailsId</td>
+
+
+                                        <td>
+                                            <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+
+                                        </td>
+                                        <td>
+                                            <form asp-action="DeleteFromCart" asp-controller="Buyers" method="post" asp-route-id="@house.Id">
+                                                <button class="btn btn alert-danger">Delete</button>
+                                            </form>
+
+                                        </td>
+
+
+                                    </tr>
+                                    break;
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+@if (flag)
+{
+    <div class="row">
+        <h3>Your Cart Is Empty</h3>
+    </div>
+}
+
+

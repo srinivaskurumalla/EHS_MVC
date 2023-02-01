@@ -1,0 +1,140 @@
+﻿@model PropertyViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<h1>hello</h1>
+<h1></h1>
+<h1></h1>
+<div style="background-color:#002b36">
+
+    <!-- filer option rectangle -->
+    <div class="row">
+
+
+
+        <div class="small col-3">
+
+            <div class="filter-options position-fixed" style="background-color:transparent">
+
+                <div class="filter-heading" style="color:whitesmoke">Filters</div>
+
+                <div class="Select-Location" style="color:whitesmoke">Select City</div>
+
+                <select class="Rectangle-2236">
+
+                    <option>Select City</option>
+
+                    <option>Delhi</option>
+
+                </select>
+
+                <div class="Select-Location" style="color:whitesmoke">Property Type</div>
+
+                <select class="Rectangle-2236">
+
+                    <option>Flat</option>
+
+                    <option>Land</option>
+
+                </select>
+
+                <div class="Select-Location" style="color:whitesmoke">Property Options</div>
+
+                <select class="Rectangle-2236">
+
+                    <option>Buy</option>
+
+                    <option>Rent</option>
+
+                </select>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="big vertical col-9">
+            @if (Model.HouseViewModels.Count > 0)
+            {
+
+                foreach (var house in Model.HouseViewModels)
+                {
+                    foreach (var images in Model.HouseImages)
+                    {
+                        if (images.HouseId == house.Id)
+                        {
+
+
+                            <div class="big vertical col-9">
+
+                                <!-- box1 -->
+
+                                <div class="iy card border-secondary mb-3">
+                                    <!-- ye box 1 hai -->
+                                    <div class="row">
+
+                                        <div class=" vertical col-8">
+
+                                            <img class="img" src="@images.ImageUrl" alt="Image supposed to be here">
+
+                                        </div>
+
+                                        <div class="col-4">
+
+                                            <div class="rest-name text-muted">@house.PropertyName</div>
+
+                                            <div class="rest-location" style="color:whitesmoke">@house.CityId</div>
+
+                                            <div class="Bakery" style="color:whitesmoke">@house.PropertyType</div>
+
+                                            <div class="Bakery" style="color:whitesmoke">Rate: &#8377 @house.InitialDeposit</div>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <div class="abc">
+
+                                                <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
+
+                                                <a asp-action="Cart" asp-controller="Buyers" class="button3 btn-primary"><span>Add To Cart</span></a>
+
+                                            </div>
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            break;
+                        }
+
+                    }
+                }
+            }
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+@if (Model.HouseViewModels.Count <= 0)
+{
+    <div class="row">
+        <h3>Sorry! No Available Properties.</h3>
+    </div>
+}

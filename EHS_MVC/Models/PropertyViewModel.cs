@@ -16,7 +16,8 @@ namespace EHS_MVC.Models
         public List<HouseImage> HouseImages { get; set; }
         public string ImageName { get; set; }
         public int HouseId { get; set; }
-      //      public string CoverImageUrl { get; set; }
+        public List<BuyerCartModel> buyerCartModels { get; set; }
+        //      public string CoverImageUrl { get; set; }
 
         // public int MyProperty { get; set; }
 

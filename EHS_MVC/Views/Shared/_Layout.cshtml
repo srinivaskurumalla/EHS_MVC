@@ -4,17 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EHS_MVC</title>
-    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.css" />
+@*    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.css" />
+*@    <link rel="stylesheet" href="~/css/Solar.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-  @*  <link rel="stylesheet" href="~/css/Solar.css" />
-*@
+
    
     
 </head>
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-nav-scroll bg-info h-auto">
-            <div class="container">
+
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark w-100  ">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EHS_MVC</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,19 +23,9 @@
                 </button>
                 <div class="collapse navbar-collapse">
                     <ul class="navbar-nav me-auto">
-                       @* <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link " asp-area="" asp-controller="Buyers" asp-action="Index">Home</a>
                         </li>
-*@
-                       @* <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Accounts" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Accounts" asp-action="SignUp">SignUp</a>
-                        </li>*@
                     </ul>
                     @*<partial name="_LoginPartial" />*@
                     @await Component.InvokeAsync("Login")
@@ -42,13 +33,13 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+  
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
+    
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted fi">
         <div class="container">
             &copy; 2023 - EHS_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

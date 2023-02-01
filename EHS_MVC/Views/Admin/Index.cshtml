@@ -80,7 +80,16 @@
                     <td>@house.PropertyName</td>
                     <td>@house.PriceRange</td>
 
-                    <td>@house.Status</td>
+                    @if(@house.Status == "APPROVED"){
+                    <td class="text-success">@house.Status</td>
+                    }
+                    else if(@house.Status == "REJECTED"){
+                         <td class="text-danger">@house.Status</td>
+                    }
+                    else{
+                         <td>@house.Status</td>
+                    }
+                   
 
 
                     <td>
@@ -100,9 +109,18 @@
     </tbody>
 </table>
 
+@*<style>
+    #tblProperties {
+        width: 100%;
+        overflow-x: scroll;
+    }
+</style>
+*@
 @section Scripts{
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+  
     <script>
         $(document).ready(function ($) {
             $('#tblProperties').DataTable();

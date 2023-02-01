@@ -1,0 +1,32 @@
+﻿@model SellerDetailsDtoViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="row">
+    <div class="col-md-5">
+        <h1 class="m-5">Property Details</h1>
+        <ul class="list-group">
+            <li class="list-group-item"> <b>Property Name :</b> @Model.HouseDetails.PropertyName</li>
+            <li class="list-group-item"> <b>Property Type :</b>@Model.HouseDetails.PropertyType </li>
+            <li class="list-group-item"> <b>Price Range :</b> @Model.HouseDetails.PriceRange</li>
+            <li class="list-group-item"> <b>City :</b> @Model.CityId</li>
+            <li class="list-group-item"> <b>Status :</b> @Model.HouseDetails.Status</li>
+            <li class="list-group-item"> <b>Uploaded Date :</b> @Model.HouseDetails.UploadDate.ToShortDateString() </li>
+
+        </ul>
+
+        <a asp-controller="Buyers" asp-action="Index" class="btn btn-danger">Back to List</a>
+    </div>
+    <div class="col-md-5">
+        <h1 class="m-5">Seller Details</h1>
+        <ul>
+            <li class="list-group-item"> <b>Full Name :</b> @Model.SellerDetails.FullName</li>
+            <li class="list-group-item"> <b>Email :</b> @Model.SellerDetails.Email</li>
+            <li class="list-group-item"> <b>Phone :</b> @Model.SellerDetails.PhoneNumber</li>
+
+        </ul>
+
+    </div>
+</div>

@@ -48,6 +48,10 @@ namespace EHS_MVC.Controllers
 
                         // TempData["UserName"] = login.Username;
                         string role = await ExtractRole();
+
+                        string roleName = role;
+                        HttpContext.Session.SetString("role", roleName);
+
                         if (role == "Seller")
                         {
 
