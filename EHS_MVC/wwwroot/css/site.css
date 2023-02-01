@@ -1,75 +1,143 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿.banner {
+    background-image: linear-gradient(rgba(0,0,0,0.5),#4e8976), url('../image/microsoftteams-image.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+/*.navbar {
+    position: absolute;
+    background-color: black;
+}*/
+
+.logo {
+    width: 4vw;
+    height: 7vh;
+    font-size: 34px;
+    font-weight: 400;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    top: 4%;
+    left: 10%;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #332c2c;
+    color: #fff;
+    font-family: sans-serif;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+#banner-text {
+    text-align: center;
+    color: white;
+    width: 100vw;
+    line-height: 52px;
+    margin-top: 190px;
+    margin-bottom: 30px;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    #banner-text h1 {
+        font-weight: 300;
+        font-size: 70px;
+        line-height: 1.5;
+        font-family: sans-serif;
+    }
+
+    #banner-text p {
+        line-height: 1.5;
+        font-size: 29px;
+        font-style: italic;
+    }
+
+.button {
+    border-radius: 100px;
+    background-color: #473d39;
+    border: none;
+    color: #f3e3e3;
+    text-align: center;
+    font-size: 18px;
+    padding: 13px;
+    width: 11vw;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 7px;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+        .button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+        .button:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+
+.button2 {
+    border-radius: 100px;
+    background-color: transparent;
+    border: none;
+    color: #f3e3e3;
+    text-align: center;
+    font-size: 18px;
+    padding: 13px;
+    width: 80vw;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 9px;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+.last {
+    text-align: center;
+    color: white;
+    width: 100vw;
+    transform: translateY(361%);
+    position: absolute;
+    top: 30%;
+    line-height: 40px;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
+.button2 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
-}
-.field-validation-error {
-    color:red;
+    .button2 span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
 
+.button2:hover span {
+    padding-right: 25px;
 }
+
+    .button2:hover span:after {
+        opacity: 1;
+        right: 0;
+    }

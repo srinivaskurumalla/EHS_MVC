@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Http;
+﻿@using Microsoft.AspNetCore.Http;
 @{
     var isvalid = Context.Session.GetString("token");
 }
@@ -12,10 +11,10 @@
         <li class="nav-item">
             <form asp-controller="Accounts" asp-action="LogOut" method="post">
                 <input type="submit" class="btn btn-link nav-link" value="Sign Out" />
-            </form>    
-        </li> 
+            </form>
+        </li>
     </ul>
-   
+
 
 }
 else
@@ -29,4 +28,3 @@ else
         </li>
     </ul>
 }
-

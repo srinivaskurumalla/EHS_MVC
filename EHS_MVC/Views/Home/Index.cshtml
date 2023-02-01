@@ -1,8 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<h1 class="mt-4 text-dark">WHITE SPACES</h1>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+
+<div class="banner">
+    <div id="banner-text">
+        <H1>Easy Housing System</H1>
+        <p>Luxury couldn’t come cheaper than this.</p>
+        <div>
+            <a asp-action="Index" asp-controller="Buyers" class="button"><span>Buy Property</span></a>
+            <a asp-action="Index" asp-controller="House"  class="button"> <span>Sell Property</span></a>
+        </div>
+    </div>
+</div>
+<div class="last">
+    <button type="button" class="button2"><span>About Us</span></button>
 </div>

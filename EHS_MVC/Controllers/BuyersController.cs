@@ -140,7 +140,7 @@ namespace EHS_MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Cart(PropertyViewModel propertyView)
         {
-            PropertyViewModel propertyViewModel = null;
+            PropertyViewModel propertyViewModel = new();
             List<SellerHouseDetailsViewModel> ho = new();
             using (var client = new HttpClient())
             {
@@ -153,21 +153,27 @@ namespace EHS_MVC.Controllers
                 var housecheck = await client.GetAsync($"Buyers/GetAllHousesforBuyer");
                 var houses = await housecheck.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
                 var res = await client.GetAsync($"Buyers/GetMyCart/{userDetailsId.Id}");
+                var tempimages = await client.GetAsync("HouseImages/GetAllHouseImages");
+
                 if (res.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    var allImages = await tempimages.Content.ReadAsAsync<List<HouseImage>>();
+                    propertyViewModel.HouseImages = allImages;
                     var cartDetails = await res.Content.ReadAsAsync<List<BuyerCartModel>>();
-                    propertyViewModel = new PropertyViewModel
-                    {
-                        buyerCartModels = cartDetails,
-                        HouseViewModels= houses
+
+
+
+                    propertyViewModel.buyerCartModels = cartDetails;
+                    propertyViewModel.HouseViewModels = houses;
                         
-                    };
+                    
                     return View(propertyViewModel);
                 }
 
             }
             propertyViewModel = new PropertyViewModel
             {
+                HouseImages = new(),
                 HouseViewModels = new(),
                 buyerCartModels = new()
             };
