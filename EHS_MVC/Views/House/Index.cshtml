@@ -1,6 +1,7 @@
-﻿@model IEnumerable<SellerHouseDetailsViewModel>
+﻿@model List<SellerHouseDetailsViewModel>
 @{
     ViewData["Title"] = "Index";
+    var flag = true;
 }
 
 
@@ -9,7 +10,7 @@
    <div class="col-2"></div>
 
     <div class="col-md-8 mt-4">
-        <a asp-controller="Home" asp-action="Index" class="text-start">Go to HomePage</a>
+        <a asp-controller="Home"  asp-action="Index" class="text-start btn btn-warning">Go to HomePage</a>
 
         <div class="row">
             <div class="col"> <div class="col text-end">
@@ -32,13 +33,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+                    @if (Model.Count <= 0)
+                    {
+                        flag = false;
+                    }
                     @foreach (var item in Model)
                     {
                        
-
-
-                            <tr>
+                       
+                        <tr>
                                 <td>@item.PropertyName</td>
                                 <td>@item.PropertyType</td>
                                 <td>@item.Status</td>
@@ -48,11 +51,18 @@
                                     <a asp-controller="House" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
                                     <a asp-controller="House" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 </td>
+
                             </tr>
                         
                     }
                 </tbody>
             </table>
+            @if (!flag)
+            {
+                <h3>NO Records Found!</h3>
+            }
         </div>
     </div>
+   
 </div>
+

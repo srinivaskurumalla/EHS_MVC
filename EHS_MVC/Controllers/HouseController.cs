@@ -40,6 +40,25 @@ namespace EHS_MVC.Controllers
             return View(House);
         }
 
+        
+        [NonAction]
+        public async Task<List<CityViewModel>> GetCitiesByStateId(int stateId)
+        {
+            List<CityViewModel> cityViewModels = null;
+
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
+                var result = await client.GetAsync($"House/GetAllCitiesByStateId/{stateId}");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    cityViewModels = await result.Content.ReadAsAsync<List<CityViewModel>>();
+                }
+            }
+            return cityViewModels;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -54,7 +73,7 @@ namespace EHS_MVC.Controllers
                 var result = await client.GetAsync($"Buyers/GetUserId/{userName}");
                 var cities = await client.GetAsync("Cities/GetAllCities");
                 var states = await client.GetAsync("House/GetAllStates");
-               // var stateCities = await client.GetAsync("House/GetAllCitiesByStateId/{stateId}");
+                // var stateCities = await client.GetAsync("House/GetAllCitiesByStateId/{stateId}");
                 if (result.IsSuccessStatusCode)
                 {
 
@@ -66,14 +85,14 @@ namespace EHS_MVC.Controllers
                 }
             }
 
-            
+
             //  string userName = HttpContext.Session.GetString("sellerName");
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
-                CityViewModels= cityViewModels,
+                CityViewModels = cityViewModels,
                 StateViewModels = stateViewModels
-                
+
             };
 
             return View(obj);
@@ -95,26 +114,26 @@ namespace EHS_MVC.Controllers
                     //  client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     House.CityId = cityId;
-                    House.UploadDate= DateTime.Now;
+                    House.UploadDate = DateTime.Now;
                     var result = await client.PostAsJsonAsync("House/CreateHouse", House);
                     var cities = await client.GetAsync("Cities/GetAllCities");
                     cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                     if (result.StatusCode == System.Net.HttpStatusCode.Created)
                     {
-                       // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                        // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                         return RedirectToAction("Index", "House");
 
                     }
                 }
             }
-           // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+            // cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
                 CityViewModels = cityViewModels,
             };
 
-           // return View(obj);
+            // return View(obj);
 
             return View(House);
         }
@@ -136,8 +155,8 @@ namespace EHS_MVC.Controllers
                     house.CityName = cityName.CityName;
                 }
 
-                house.HouseId= id;
-                string houseId =  id.ToString();
+                house.HouseId = id;
+                string houseId = id.ToString();
                 HttpContext.Session.SetString("houseId", houseId);
 
             }

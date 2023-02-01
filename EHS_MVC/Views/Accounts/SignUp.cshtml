@@ -75,11 +75,11 @@
                                 </div>
                             </div>                                 <div class="row form-group d-flex">
                                 <div class="col form-floating mb-4">
-                                    <input type="text" asp-for="@Model.SignUpRoles.Password" class="form-control" placeholder="Enter your PassWord" />                                   
+                                    <input type="password" asp-for="@Model.SignUpRoles.Password" class="form-control" placeholder="Enter your PassWord" />                                   
                                     <label asp-for="@Model.SignUpRoles.Password" class="form-label"></label>
                                     <span asp-validation-for="@Model.SignUpRoles.Password" class="text-danger"></span>
                                 </div>                                     <div class="col form-floating mb-4">
-                                    <input type="text" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" placeholder="Enter your  Confirm PassWord" />                            
+                                    <input type="password" asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-control" placeholder="Enter your  Confirm PassWord" />                            
                                     <label asp-for="@Model.SignUpRoles.ConfirmPassword" class="form-label"></label>
                                     <span asp-validation-for="@Model.SignUpRoles.ConfirmPassword" class="text-danger"></span>
                                 </div>
@@ -99,4 +99,11 @@
 
 
 </section>
+@section Scripts{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
+
 

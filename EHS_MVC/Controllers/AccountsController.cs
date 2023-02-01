@@ -30,6 +30,7 @@ namespace EHS_MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel login)
         {
+
             if (ModelState.IsValid)
             {
                 using (var client = new HttpClient())
@@ -38,7 +39,9 @@ namespace EHS_MVC.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                     var result = await client.PostAsJsonAsync("Accounts/Login", login);
-                    if (result.IsSuccessStatusCode)
+                   // var validStudent = _dbContext.Users.Any(u => u.Name == loginViewModel.Username && u.Password == loginViewModel.Password);
+
+                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
@@ -73,6 +76,7 @@ namespace EHS_MVC.Controllers
                     ModelState.AddModelError("", "Invalid Username or Password");
                 }
             }
+            TempData["Alert"] = "Invalid login credentials. Please try again.";
             return View(login);
         }
 

@@ -95,6 +95,12 @@ namespace EHS_MVC.Controllers
                     var sellerId = house.UserDetailsId;
                     var sellerDetails = await client.GetAsync($"Seller/GetSellerById/{sellerId}");
 
+                    var cityNameResult = await client.GetAsync($"Cities/GetcityById/{house.CityId}");
+                    var cityName = await cityNameResult.Content.ReadAsAsync<CityViewModel>();
+
+                    house.CityName = cityName.CityName;
+
+
                     seller = await sellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
 
                     //  var result = await houseAndSellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
