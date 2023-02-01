@@ -52,11 +52,14 @@ namespace EHS_MVC.Models
 
         public List<CityViewModel> CityViewModels { get; set; }
         // public int HouseImageId { get; set; }
+        public StateViewModel StateViewModel { get; set; }
+        public List<StateViewModel> StateViewModels { get; set; }
         public ICollection<HouseImage> HouseImages { get; set; }
         public int HouseId { get; set; }
 
         public string Status { get; set; }
 
+        public string Remarks { get; set; }
     }
 
 
@@ -84,16 +87,17 @@ namespace EHS_MVC.Models
 
             //Foreign key
             public int StateId { get; set; }
-            public State State { get; set; }
+            public StateViewModel State { get; set; }
 
             public ICollection<SellerHouseDetailsViewModel> Houses { get; set; }
         }
-        public class State
+        public class StateViewModel
         {
             public int Id { get; set; }
             public string StateName { get; set; }
 
             //  public Seller seller { get; set; }
+
             public ICollection<CityViewModel> Cities { get; set; }
 
         }

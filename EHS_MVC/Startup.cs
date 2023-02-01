@@ -27,7 +27,7 @@ namespace EHS_MVC
             //Configure Session
             services.AddSession(o =>
             {
-                o.IdleTimeout = TimeSpan.FromMinutes(1);
+                o.IdleTimeout = TimeSpan.FromMinutes(5);
             });
             services.AddControllersWithViews();
 

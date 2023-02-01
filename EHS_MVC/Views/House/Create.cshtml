@@ -16,32 +16,32 @@
         <div class="col-md-12 offset-1">
             <div class="row">
                 <div class="col-md-4 align-content-xxl-start offset-0">
-                    
-                    <p>Do you want to Sell your flat or put your house on rent? Magicbricks has the right solution for you.Your advertisement will be viewed by millions of buyers and tenants in India.Magicbricks provides you the best classified for your requirement. Our website offers one free property ad that you can use for selling or renting . You will be able to sell or rent every real estate property from flat or house to land , even commercial property fast and immediately.</p>
-                        <img src="https://dbv47yu57n5vf.cloudfront.net/s3fs-public/editorial/my/2018/March/30/48319485_m.jpg" width="100" height="100" />
 
-                    
-                     <div class="row-cols-1 text-start">
-                <a asp-controller="House" asp-action="Index" class="btn btn-dark">Your Existing Property</a>
-            </div>
-            <br />
-           @* <div class="row-cols-1 text-start">
-                <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
-                <a asp-controller="HouseImage" asp-action="Create" class="btn btn-dark">Add Images</a>
-            </div>
-             *@       @*<img src="https://cdn.dribbble.com/users/1206715/screenshots/6480410/home_key_logo.jpg" width="500" height="520" />*@
+                    <p>Do you want to Sell your flat or put your house on rent? Magicbricks has the right solution for you.Your advertisement will be viewed by millions of buyers and tenants in India.Magicbricks provides you the best classified for your requirement. Our website offers one free property ad that you can use for selling or renting . You will be able to sell or rent every real estate property from flat or house to land , even commercial property fast and immediately.</p>
+                    <img src="https://dbv47yu57n5vf.cloudfront.net/s3fs-public/editorial/my/2018/March/30/48319485_m.jpg" width="100" height="100" />
+
+
+                    <div class="row-cols-1 text-start">
+                        <a asp-controller="House" asp-action="Index" class="btn btn-dark">Your Existing Property</a>
+                    </div>
+                    <br />
+                    @* <div class="row-cols-1 text-start">
+                    <p1>Sellers Add images for their properties to reach more customer. As Per our research customers are more impressed with images. If You want to grow your insight please add Images</p1>
+                    <a asp-controller="HouseImage" asp-action="Create" class="btn btn-dark">Add Images</a>
+                    </div>
+                    *@       @*<img src="https://cdn.dribbble.com/users/1206715/screenshots/6480410/home_key_logo.jpg" width="500" height="520" />*@
                 </div>
                 <div class="col-md-6 align-content-end shadow-lg rounded pl-5 pr-5 pb-3 offset-1">
                     <h4 class="card-header-pills">Add Property Details</h4>
                     <form asp-controller="House" asp-action="Create" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
-                          
-                           
-                            <input type="hidden" asp-for="UserDetailsId"  />
-                          
-                       
+
+
+                        <input type="hidden" asp-for="UserDetailsId" />
+
+
                         <div class="form-group">
-                            
+
                             <label asp-for="PropertyOption">Property Option</label>
                             <br />
                             <div class="form-check form-check-inline">
@@ -79,20 +79,39 @@
                             <span asp-validation-for="Address" class="text-bg-danger"></span>
 
                         </div>
-                      @*  <div class="form-group">
-                            <label asp-for="CityId">City</label>
-                            <input type="text" asp-for="CityId" placeholder="City Id" class="form-control" />
-                            <span asp-validation-for="CityId" class="text-bg-danger"></span>
-                            
+                        @*  <div class="form-group">
+                        <label asp-for="CityId">City</label>
+                        <input type="text" asp-for="CityId" placeholder="City Id" class="form-control" />
+                        <span asp-validation-for="CityId" class="text-bg-danger"></span>
+
                         </div>*@
-                         <label asp-for="CityId">City</label>
-                          <select id="genre-dropdown" name="cityId" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
-                    <option value="">--Select--</option>
-                    @foreach (var city in Model.CityViewModels.Distinct())
-                    {
-                        <option value="@city.Id">@city.CityName</option>
-                    }
-                </select>
+
+
+                        @* testing of city and states*@
+                        <label for="states">States:</label>
+                        <select id="states" class="form-control">
+                            <option value="">--Select State--</option>
+                            @foreach (var state in Model.StateViewModels.Distinct())
+                            {
+                                <option value="@state.Id">@state.StateName</option>
+                            }
+                        </select>
+
+                        @*  <div class="form-group">
+                        <label for="cities">Cities:</label>
+                        <select id="cities" class="form-control" disabled="disabled">
+                        <option value="">--Select City--</option>
+                        </select>
+                        </div>*@
+
+                        <label asp-for="CityId">City</label>
+                        <select id="genre-dropdown" name="cityId" asp-for="CityId" class="w-75 form-select" aria-describedby="button-addon2">
+                            <option value="">--Select--</option>
+                            @foreach (var city in Model.CityViewModels.Distinct())
+                            {
+                                <option value="@city.Id">@city.CityName</option>
+                            }
+                        </select>
 
                         <div class="form-group">
                             <label asp-for="Landmark">Landmark</label>
@@ -105,11 +124,11 @@
                             <input type="text" asp-for="Region" placeholder="Enter Region" class="form-control" />
                             <span asp-validation-for="Region" class="text-bg-danger"></span>
                         </div>
-                       @*  <div class="mb-2">
-                <label asp-for="UploadDate" class="form-label"></label>
-                <input type="date" asp-for="UploadDate" class="form-control" />
-                <span asp-validation-for="UploadDate"></span>
-            </div>*@
+                        @*  <div class="mb-2">
+                        <label asp-for="UploadDate" class="form-label"></label>
+                        <input type="date" asp-for="UploadDate" class="form-control" />
+                        <span asp-validation-for="UploadDate"></span>
+                        </div>*@
                         <div class="form-group">
                             <label asp-for="InitialDeposit">Initial Deposit</label>
                             <input type="text" asp-for="InitialDeposit" placeholder="Enter initial deposit" class="form-control" />
@@ -119,7 +138,7 @@
                         <input type="text" asp-for="PriceRange" placeholder="Enter price range" class="form-control" />
                         <span asp-validation-for="PriceRange" class="text-bg-danger"></span>
                         <br />
-                        
+
                         <div class="form-group">
                             @*<input type="submit" class="=btn btn-dark float-right" value="Add Property" />*@
                             <button type="submit" class="btn btn-dark" value="Add Property">Add Property</button>
@@ -134,6 +153,44 @@
     </div>
 </div>
 
+@*
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/api/dropdown",
+            success: function (states) {
+                $.each(states, function (key, state) {
+                    $("#states").append("
+                        < option value = '" + state.Id + "' > " + state.Name + " < /option>");
+                });
+            }
+        });
 
-
-
+        $("#states").change(function () {
+            var stateId = $(this).val();
+            if (stateId) {
+                $.ajax({
+                    type: "GET",
+                    url: "/api/dropdown/" + stateId,
+                    success: function (cities) {
+                        $("#cities").empty();
+                        $("#cities").append("
+                            < option value = '' > --Select City-- < /option>");
+                        $.each(cities, function (key, city) {
+                                $("#cities").append("
+                                    < option value = '" + city.Id + "' > " + city.Name + " < /option>");
+                        });
+                        $("#cities").removeAttr("disabled");
+                    }
+                });
+            }
+            else {
+                $("#cities").empty();
+                $("#cities").append("
+                    < option value = '' > --Select City-- < /option>");
+                $("#cities").attr("disabled", "disabled");
+            }
+        });
+    });
+</script>*@

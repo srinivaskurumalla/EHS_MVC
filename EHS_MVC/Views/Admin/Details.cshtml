@@ -17,6 +17,8 @@
             <li class="list-group-item"> <b>Uploaded Date :</b> @Model.HouseDetails.UploadDate.ToShortDateString() </li>
 
         </ul>
+
+       
         <div class="btn-group" role="group" aria-label="Basic outlined example m-2">
             <form method="get" asp-controller="Admin" asp-action="ApproveHouse" asp-route-id="@Model.HouseDetails.Id">
                 <button type="submit" class="btn btn-outline-success">Approve</button>
@@ -24,7 +26,12 @@
             <form method="get" asp-controller="Admin" asp-action="RejectHouse" asp-route-id="@Model.HouseDetails.Id">
                 <button type="submit" class="btn btn-outline-danger">Reject</button>
             </form>
+          @*  <div class="form-group">
+                <label asp-for="Remarks">Remarks</label>
+                <input type="text" asp-for="Remarks" placeholder="Please write Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-bg-danger"></span>
 
+            </div>*@
         </div>
 
 

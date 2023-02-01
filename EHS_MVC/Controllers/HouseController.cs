@@ -46,17 +46,22 @@ namespace EHS_MVC.Controllers
             //List<SellerHouseDetailsViewModel> House = new();
             SignUpViewModel seller = new();
             List<CityViewModel> cityViewModels = null;
+            List<StateViewModel> stateViewModels = new();
             string userName = HttpContext.Session.GetString("sellerName");
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var result = await client.GetAsync($"Buyers/GetUserId/{userName}");
                 var cities = await client.GetAsync("Cities/GetAllCities");
+                var states = await client.GetAsync("House/GetAllStates");
+               // var stateCities = await client.GetAsync("House/GetAllCitiesByStateId/{stateId}");
                 if (result.IsSuccessStatusCode)
                 {
 
                     seller = await result.Content.ReadAsAsync<SignUpViewModel>();
                     cityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
+                    stateViewModels = await states.Content.ReadAsAsync<List<StateViewModel>>();
+
 
                 }
             }
@@ -66,7 +71,8 @@ namespace EHS_MVC.Controllers
             SellerHouseDetailsViewModel obj = new SellerHouseDetailsViewModel
             {
                 UserDetailsId = seller.Id,
-                CityViewModels= cityViewModels
+                CityViewModels= cityViewModels,
+                StateViewModels = stateViewModels
                 
             };
 
@@ -148,16 +154,18 @@ namespace EHS_MVC.Controllers
                 {
                     client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
                     var result = await client.GetAsync($"House/GetHouseById/{id}");
+                    var cities = await client.GetAsync("Cities/GetAllCities");
                     if (result.IsSuccessStatusCode)
                     {
                         House = await result.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
-                      
+
                         //  movie.Genres = await this.GetGenres();
+                        House.CityViewModels = await cities.Content.ReadAsAsync<List<CityViewModel>>();
                         return View(House);
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Movie doesn't exists");
+                        ModelState.AddModelError("", "House doesn't exists");
                     }
                 }
             }

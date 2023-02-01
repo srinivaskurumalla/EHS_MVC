@@ -27,23 +27,29 @@
                         <th>Property Name</th>
                         <th>Property type</th>
                         <th>Status</th>
+                        <th>Remarks</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                   
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>@item.PropertyName</td>
-                            <td>@item.PropertyType</td>
-                            <td>@item.Status</td>
-                            <td>
-                                <a asp-controller="House" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-controller="House" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
-                                <a asp-controller="House" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
-                        </tr>
+                       
+
+
+                            <tr>
+                                <td>@item.PropertyName</td>
+                                <td>@item.PropertyType</td>
+                                <td>@item.Status</td>
+                                <td>@item.Remarks</td>
+                                <td>
+                                    <a asp-controller="House" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-controller="House" asp-action="Edit" asp-route-id="@item.Id">Customize</a> |
+                                    <a asp-controller="House" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        
                     }
                 </tbody>
             </table>

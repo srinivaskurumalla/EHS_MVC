@@ -38,11 +38,10 @@ namespace EHS_MVC.Controllers
 
 
             SelectedValue = selectedValue;
-            PropertyViewModel propertyViewModel = null;
             List<SellerHouseDetailsViewModel> houses = new();
             List<CityViewModel> cityViewModels = null;
-            List<SellerHouseDetailsViewModel> houses2 = new List<SellerHouseDetailsViewModel>();
-            List<SellerHouseDetailsViewModel> combinedHouses = new List<SellerHouseDetailsViewModel>();
+            List<SellerHouseDetailsViewModel> houses2 = new();
+            List<SellerHouseDetailsViewModel> combinedHouses = new();
 
 
 
@@ -52,7 +51,7 @@ namespace EHS_MVC.Controllers
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
-                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+               // client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 if (string.IsNullOrEmpty(selectedValue))
                 {
@@ -99,7 +98,7 @@ namespace EHS_MVC.Controllers
 
 
 
-            propertyViewModel = new PropertyViewModel
+            PropertyViewModel propertyViewModel = new PropertyViewModel
             {
                 HouseViewModels = combinedHouses,
                 Values = new List<SelectListItem>
@@ -165,18 +164,19 @@ namespace EHS_MVC.Controllers
 
         public async Task<IActionResult> ApproveHouse(int id)
         {
-
+          
             using (var client = new HttpClient())
             {
 
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
-                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                //client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var res = await client.PutAsync($"Admins/ApproveHouse/{id}", null);
                 if (res.IsSuccessStatusCode)
                 {
+                  
                     return RedirectToAction("Index", "Admin");
                 }
 
@@ -196,7 +196,7 @@ namespace EHS_MVC.Controllers
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
-                client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+              //  client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
                 var res = await client.PutAsync($"Admins/RejectHouse/{id}", null);
                 if (res.IsSuccessStatusCode)
