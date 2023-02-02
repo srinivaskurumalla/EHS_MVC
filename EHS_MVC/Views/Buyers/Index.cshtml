@@ -1,6 +1,7 @@
 ﻿@model PropertyViewModel
 @{
     ViewData["Title"] = "Index";
+    var flag = true;
 }
 
 
@@ -106,40 +107,12 @@
 
                 <div class="filter-heading" style="color:whitesmoke">Filters</div>
 
-                <div class="Select-Location" style="color:whitesmoke">Select City</div>
+                <form asp-controller="Buyers" asp-action="Index" method="get">
 
-                <select class="Rectangle-2236">
+                    <div class="Select-Location" style="color:whitesmoke">Property Type</div>
 
-                    <option>Select City</option>
-
-                    <option>Delhi</option>
-
-                </select>
-
-                <div class="Select-Location" style="color:whitesmoke">Property Type</div>
-
-                <select class="Rectangle-2236">
-
-                    <option>Flat</option>
-
-                    <option>Land</option>
-
-                </select>
-
-                <div class="Select-Location" style="color:whitesmoke">Property Options</div>
-
-                <select class="Rectangle-2236">
-
-                    <option>Buy</option>
-
-                    <option>Rent</option>
-
-                </select>
-
-
-
-
-
+                    <select asp-for="SelectedValue" asp-items="Model.Values" class="Rectangle-2236" style="color:whitesmoke" onchange="this.form.submit()"></select>
+                </form>
 
 
             </div>
@@ -155,7 +128,7 @@
                     {
                         if (images.HouseId == house.Id)
                         {
-
+                            flag = false;
 
                             <div class="big vertical col-9">
 
@@ -182,17 +155,21 @@
                                             <div class="Bakery" style="color:whitesmoke">Rate: &#8377 @house.InitialDeposit</div>
 
                                         </div>
-                                      
+
 
                                         <div>
+                                            <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
 
-                                            <div class="abc">
+                                                <div class="abc">
 
-                                                <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
+                                                    <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
 
-                                                <a asp-action="Cart" asp-controller="Buyers" class="button3 btn-primary"><span>Add To Cart</span></a>
+                                                    <button type="submit" class="button3 btn-primary">
+                                                        Add to cart
+                                                    </button>
+                                                </div>
+                                            </form>
 
-                                            </div>
 
 
 
@@ -204,9 +181,15 @@
                             </div>
                             break;
                         }
-                        
+
                     }
                 }
+            }
+            @if(flag)
+            {
+                <div class="row mt-5">
+                    <h3>Sorry! No Available Properties.</h3>
+                </div>
             }
 
 
@@ -217,9 +200,4 @@
 
 
 
-@if (Model.HouseViewModels.Count <= 0)
-{
-    <div class="row">
-        <h3>Sorry! No Available Properties.</h3>
-    </div>
-}
+

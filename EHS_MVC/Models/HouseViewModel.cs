@@ -55,6 +55,8 @@ namespace EHS_MVC.Models
         public int HouseId { get; set; }
 
         public string Status { get; set; }
+        List<HouseImageViewModel> houseImages { get; set; }
+
 
     }
 

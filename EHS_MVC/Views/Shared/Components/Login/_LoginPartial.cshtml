@@ -1,18 +1,43 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @{
     var isvalid = Context.Session.GetString("token");
+    var role = Context.Session.GetString("role");
 }
 @if (isvalid != null)
 {
+
     <ul class="navbar-nav my-2 my-sm-0">
-        <li class="nav-item">
-            <a asp-controller="" asp-action="" class="nav-link">welcome,@ViewBag.Name</a>
+        <li class="nav-item" style="margin-top: 1px;">
+            <a asp-controller="" asp-action="" class="nav-link">@ViewBag.Name</a>
         </li>
         <li class="nav-item">
             <form asp-controller="Accounts" asp-action="LogOut" method="post">
-                <input type="submit" class="btn btn-link nav-link" value="Sign Out" />
+                <input type="submit" class="btn btn-link mb--2 nav-link" value="Sign Out" />
             </form>
         </li>
+        @if (role == "Seller")
+        {
+            <li class="nav-item">
+                <form asp-controller="House" asp-action="Index" method="get">
+                    <input type="submit" class="btn btn-link mb--2 nav-link" value="Your Properties" />
+                </form>
+            </li>
+        }
+        @if (role == "ADMIN")
+        {
+            <li class="nav-item">
+                <form asp-controller="Admin" asp-action="Index" method="get">
+                    <input type="submit" class="btn btn-link mb--2 nav-link" value="Go to Admin Page" />
+                </form>
+            </li>
+        }
+        @if(role == "BUYER")
+        {
+            <li class="nav-item">
+                <a class="navbar-brand" asp-area="" asp-controller="Buyers" asp-action="Cart"><img class="logo" src="~/images/pngimg.com - shopping_cart_png57.png"  style="WIDTH: 2VW;HEIGHT: 4VH;MARGIN-TOP: 9PX;BORDER-RADIUS: 0;"/> </a>
+             
+            </li>
+        }
     </ul>
 
 

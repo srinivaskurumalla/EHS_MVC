@@ -77,7 +77,7 @@ namespace EHS_MVC.Controllers
         {
             SellerHouseDetailsViewModel house = null;
             UserDetailsViewModel seller = null;
-            SellerDetailsDtoViewModel houseWithSellerDetails = null;
+            SellerDetailsDtoViewModel houseWithSellerDetails = new();
 
 
             using (var client = new HttpClient())
@@ -85,26 +85,47 @@ namespace EHS_MVC.Controllers
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var houseDetails = await client.GetAsync($"Buyers/GetHouseDetails/{id}");
 
+
                 // var houseAndSellerDetails = await client.GetAsync($"Seller/GetSellerDetails/{id}");
 
 
                 if (houseDetails.IsSuccessStatusCode)
                 {
+                    
                     house = await houseDetails.Content.ReadAsAsync<SellerHouseDetailsViewModel>();
 
                     var sellerId = house.UserDetailsId;
                     var sellerDetails = await client.GetAsync($"Seller/GetSellerById/{sellerId}");
+
+                    var cityNameResult = await client.GetAsync($"Cities/GetcityById/{house.CityId}");
+                    var cityName = await cityNameResult.Content.ReadAsAsync<CityViewModel>();
+
+                    house.CityName = cityName.CityName;
+
 
                     seller = await sellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
 
                     //  var result = await houseAndSellerDetails.Content.ReadAsAsync<UserDetailsViewModel>();
 
                 }
-                houseWithSellerDetails = new SellerDetailsDtoViewModel
+                var checkAllImages = await client.GetAsync("HouseImages/GetAllHouseImages");
+                if(checkAllImages.IsSuccessStatusCode)
                 {
-                    HouseDetails = house,
-                    SellerDetails = seller
-                };
+                    var AllImages = await checkAllImages.Content.ReadAsAsync<List<HouseImageViewModel>>();
+                    houseWithSellerDetails.HouseImages = AllImages;
+
+                }
+
+
+
+
+                houseWithSellerDetails.HouseDetails = house;
+                houseWithSellerDetails.SellerDetails = seller;
+                        
+                    
+                    
+                 
+                
                 return View(houseWithSellerDetails);
             }
 
@@ -120,19 +141,28 @@ namespace EHS_MVC.Controllers
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                 var user = HttpContext.Session.GetString("UserName");
                 var userDetails = await client.GetAsync($"Buyers/GetUserId/{user}");
-                var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();
-                
-                BuyerCartModel buyer = new BuyerCartModel
+                if(userDetails.IsSuccessStatusCode)
                 {
-                    HouseId = id,
-                    UserDetaisId = userDetailsId.Id
+                    var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();
+                    BuyerCartModel buyer = new BuyerCartModel
+                    {
+                        HouseId = id,
+                        UserDetaisId = userDetailsId.Id
 
-                };
-                var res = await client.PostAsJsonAsync("Buyers/AddToCart", buyer);
-                if (res.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
+                    };
+                    var res = await client.PostAsJsonAsync("Buyers/AddToCart", buyer);
+                    if (res.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+
                 }
+                else
+                {
+                    return RedirectToAction("Login","Accounts");
+                }
+
+               
             }
             return RedirectToAction("Index");
         }
@@ -146,7 +176,6 @@ namespace EHS_MVC.Controllers
             {
                 client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
-                var user = HttpContext.Session.GetString("UserName");
                 var users = HttpContext.Session.GetString("UserName");
                 var userDetails = await client.GetAsync($"Buyers/GetUserId/{users}");
                 var userDetailsId = await userDetails.Content.ReadAsAsync<BuyerDetailsModel>();

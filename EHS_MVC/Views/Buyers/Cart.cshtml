@@ -4,95 +4,96 @@
     var flag = true;
 }
 
-<h1 class="mt-4" style="color:#002b36">WHITE SPACES</h1>
-<div class="row">
+<h1>hello</h1>
+<h6>-</h6>
+<h1></h1>
+<div style="background-color:#002b36">
 
-    <div class="row">
-        <div class="col">
-            <h2 class="card-header-pills mt-5">List of All Properties In Your Cart</h2>
+    <!-- filer option rectangle -->
+    <div class="row mt-1">
+        <div class="col-2">
+            <a asp-action="Index" asp-controller="Buyers" class="btn btn-warning">Back</a>
         </div>
-
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Property Type</th>
-                <th>Property Name</th>
-                <th>Price Range</th>
-                <th>Seller Details</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-
-            @if (Model.buyerCartModels.Count > 0)
+        <div class="big vertical col-3 offset-2">
+            @if (Model.HouseViewModels.Count > 0)
             {
 
-
-                foreach (var carts in Model.buyerCartModels)
+                foreach (var house in Model.HouseViewModels)
                 {
-                    foreach (var house in Model.HouseViewModels)
+                    foreach (var buyercart in Model.buyerCartModels)
                     {
-                        if (carts.HouseId == house.Id)
+                        if (house.Id == buyercart.HouseId)
                         {
-                            foreach (var img in Model.HouseImages)
+
+
+                            foreach (var images in Model.HouseImages)
                             {
-                                if (img.HouseId == house.Id)
+                                if (images.HouseId == house.Id)
                                 {
 
 
+                                    <div class="big vertical col-9">
 
-                                    flag = false;
+                                        <!-- box1 -->
 
+                                        <div class="iy card border-secondary mb-3">
+                                            <!-- ye box 1 hai -->
+                                            <div class="row">
 
-                                    <tr>
-                                        <td>
-                                            <img src="@img.ImageUrl">
-                                        </td>
-                                        <td>@house.PropertyType</td>
-                                        <td>@house.PropertyName</td>
-                                        <td>@house.PriceRange</td>
-                                        <td>@house.UserDetailsId</td>
+                                                <div class=" vertical col-8">
 
+                                                    <img class="img" src="@images.ImageUrl" alt="Image supposed to be here">
 
-                                        <td>
-                                            <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+                                                </div>
 
-                                        </td>
-                                        <td>
-                                            <form asp-action="DeleteFromCart" asp-controller="Buyers" method="post" asp-route-id="@house.Id">
-                                                <button class="btn btn alert-danger">Delete</button>
-                                            </form>
+                                                <div class="col-4">
 
-                                        </td>
+                                                    <div class="rest-name text-muted">@house.PropertyName</div>
 
+                                                    <div class="rest-location" style="color:whitesmoke">@house.CityId</div>
 
-                                    </tr>
+                                                    <div class="Bakery" style="color:whitesmoke">@house.PropertyType</div>
+
+                                                    <div class="Bakery" style="color:whitesmoke">Rate: &#8377 @house.InitialDeposit</div>
+
+                                                </div>
+
+                                                <form asp-action="DeleteFromCart" asp-controller="Buyers" asp-route-id="@house.Id" method="post">
+
+                                                    <div>
+
+                                                        <div class="abc">
+
+                                                            <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
+                                                        </div>
+                                                        <input type="submit" class="btn btn-warning" value="Remove">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     break;
                                 }
 
                             }
                         }
                     }
-
                 }
+            }
+            @if (Model.HouseViewModels.Count <= 0)
+            {
+                <div class="row mt-5" style="text-align:center">
+                    <h1>Your Cart Is Empty</h1>
+                </div>
             }
 
 
-        </tbody>
-    </table>
 
+        </div>
+    </div>
 </div>
 
 
-@if (flag)
-{
-    <div class="row">
-        <h3>Your Cart Is Empty</h3>
-    </div>
-}
 
 
 

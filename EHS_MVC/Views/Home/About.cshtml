@@ -1,0 +1,135 @@
+﻿@{
+	ViewData["Title"] = "About";
+}
+<style>
+	.team-single {
+		display: block;
+		position: relative;
+		transition: .3s;
+		overflow: hidden;
+		padding-right: 1px;
+	}
+
+		.team-single img {
+			transform: scaleY(1);
+			transition: all 0.7s ease-in-out 0s;
+		}
+
+		.team-single:hover img {
+			transform: scale(1.2);
+		}
+
+		.team-single:hover {
+			box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+			-webkit-box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+			-moz-box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+		}
+
+	.team-overlay {
+		background: #ff5f6d none repeat scroll 0 0;
+		box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+		-webkit-box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+		-moz-box-shadow: 0 0 30px 0px rgba(0, 0, 0, 0.1);
+		padding: 22px 0 12px;
+		position: absolute;
+		top: 40%;
+		transform: translateY(-50%);
+		width: 100%;
+		opacity: 0;
+		visibility: hidden;
+		transition: .3s;
+	}
+
+	.team-single:hover .team-overlay {
+		opacity: 1;
+		visibility: visible;
+		top: 50%;
+	}
+
+	.team-overlay > h5 {
+		color: #fff;
+		font-weight: 600;
+	}
+
+	.team-overlay h6 {
+		color: #fff;
+	}
+</style>
+<h1>About</h1>
+
+<section id="team" class="team-area ptb-130">
+	<div class="container">
+		<div class="row">
+			<div class="col-18">
+				<div class="section-heading pb-55 text-center">
+					<h2 class="mt-4">Team Members</h2>
+					<p>We are assigned the Easy housing online Solution Project which have many functionality like The system will allow users to buy, sell, and maintain their property details in a systematic way. The administrator will have complete control over the properties listed on the site and will be responsible for verifying properties added by owners. Owners or sellers can add, edit, and view their properties, and buyers can search, compare, and view property details. </p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-6">
+				<div class="team-single">
+					<img src="https://i.pinimg.com/originals/2b/de/70/2bde70bb4ec69a8299f05360eb1b56fa.jpg" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Abdul Ahad</h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030850</h6>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="team-single">
+					<img src="https://pbs.twimg.com/profile_images/1494127225435684866/X0xWfYyc_400x400.jpg" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Pawan Singh</h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030846</h6>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<div class="team-single">
+					<img src="https://wallpapercave.com/wp/wp2377590.jpg" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Srinivas Kurumala</h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030917</h6>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="col-lg-4 col-md-6 mt-4">
+				<div class="team-single">
+					<img src="https://i.pinimg.com/originals/da/1d/6e/da1d6e70dee30b15e44d906f806c0c96.jpg" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Kishan Kr Yadav</h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030761</h6>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mt-4">
+				<div class="team-single">
+					<img src="https://cdn.myanimelist.net/images/characters/7/391549.jpg" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Vinay Avala</h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030947</h6>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mt-4">
+				<div class="team-single">
+					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFuLom7PPC1zAkeon0aJwRfZF5PSsJVdrOug&usqp=CAU" alt="" height="200" width="200" />
+					<div class="team-overlay text-center">
+						<h4>Vishva Teja </h4>
+						<h5>ASE -ICS VIZAG</h5>
+						<h6>E.ID - 1030918</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

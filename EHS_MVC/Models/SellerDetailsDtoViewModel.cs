@@ -42,6 +42,7 @@ namespace EHS_MVC.Models
          public string FullName { get; set; }*/
         public CityViewModel CityViewModel { get; set; }
         public int CityId { get; set; }
+        public List<HouseImageViewModel> HouseImages { get; set; }
       
     }
 

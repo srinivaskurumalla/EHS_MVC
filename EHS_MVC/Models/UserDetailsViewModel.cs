@@ -33,6 +33,7 @@ namespace EHS_MVC.Models
 
         [Required(ErrorMessage = "Please enter the Password")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Password is too short.")]
+        [Compare("Password",ErrorMessage ="Password does not match")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 

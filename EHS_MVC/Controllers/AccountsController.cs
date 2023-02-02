@@ -38,7 +38,7 @@ namespace EHS_MVC.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
                     var result = await client.PostAsJsonAsync("Accounts/Login", login);
-                    if (result.IsSuccessStatusCode)
+                    if (result.StatusCode== System.Net.HttpStatusCode.OK)
                     {
                         string token = await result.Content.ReadAsAsync<string>();
                         HttpContext.Session.SetString("token", token);
@@ -48,6 +48,10 @@ namespace EHS_MVC.Controllers
 
                         // TempData["UserName"] = login.Username;
                         string role = await ExtractRole();
+
+                        string roleName = role;
+                        HttpContext.Session.SetString("role", roleName);
+
                         if (role == "Seller")
                         {
 
