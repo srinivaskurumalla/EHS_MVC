@@ -31,21 +31,21 @@ namespace EHS_MVC.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Please enter the Password")]
+       // [Required(ErrorMessage = "Please enter the Password")]
         [StringLength(100, MinimumLength = 4, ErrorMessage = "Password is too short.")]
         [DataType(DataType.Password)]
         [Compare("Password",ErrorMessage ="Password does not match")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Please enter the Email Address")]
+        [Required(ErrorMessage = "Enter the Email")]
         //[EmailAddress(ErrorMessage = "please enter a valid email address")]
         public string Email { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Enter Phone Number")]
         //[Phone]
         public string PhoneNumber { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Full Name")]
         //[MaxLength(50)]
         public string FullName { get; set; }
 

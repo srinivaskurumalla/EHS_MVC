@@ -1,10 +1,96 @@
 ﻿@model PropertyViewModel
 @{
     ViewData["Title"] = "Index";
+    var flag = true;
 }
 
 
+@*<h1 class="mt-4" style="color:#002b36">WHITE SPACES</h1>
+<div class="row">
+    <form asp-controller="Buyers" asp-action="Index" method="get">
+        <div class="row">
+            <div class="col-3 form-group mt-4">
+                <select asp-for="SelectedValue" asp-items="Model.Values" class="form-select dropdown" onchange="this.form.submit()" ;font-weight:bold"></select>
+            </div>
+            <div class="form-group">
+            </div>
+        </div>
 
+    </form>
+
+
+    <div class="row">
+        <div class="col">
+            <h2 class="card-header-pills mt-5">List of All Properties</h2>
+        </div>
+
+    </div>
+    <div class="row">
+        <form asp-action="Cart" asp-controller="Buyers" method="get">
+            <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                View your cart
+            </button>
+        </form>
+
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Property Type</th>
+
+
+                <th>Property Name</th>
+                <th>Price Range</th>
+                <th>Seller Details</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (Model.HouseViewModels.Count > 0)
+            {
+
+                foreach (var house in Model.HouseViewModels)
+                {
+                    foreach (var images in Model.HouseImages)
+                    {
+                        if (images.HouseId == house.Id)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@images.ImageUrl" class="img-thumbnail" />
+                                </td>
+                                <td>@house.PropertyType</td>
+                                <td>@house.PropertyName</td>
+                                <td>@house.PriceRange</td>
+                                <td>@house.UserDetailsId</td>
+
+
+                                <td>
+                                    <a asp-controller="Buyers" asp-action="Details" asp-route-id="@house.Id">Details</a> |
+
+                                </td>
+                                <td>
+                                    <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
+                                        <button type="submit" class="btn btn-outline-light btn-block mb-4">
+                                            Add to cart
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+        </tbody>
+    </table>
+
+</div>*@
 <h1>hello</h1>
 <h1></h1>
 <h1></h1>
@@ -21,40 +107,12 @@
 
                 <div class="filter-heading" style="color:whitesmoke">Filters</div>
 
-                <div class="Select-Location" style="color:whitesmoke">Select City</div>
+                <form asp-controller="Buyers" asp-action="Index" method="get">
 
-                <select class="Rectangle-2236">
+                    <div class="Select-Location" style="color:whitesmoke">Property Type</div>
 
-                    <option>Select City</option>
-
-                    <option>Delhi</option>
-
-                </select>
-
-                <div class="Select-Location" style="color:whitesmoke">Property Type</div>
-
-                <select class="Rectangle-2236">
-
-                    <option>Flat</option>
-
-                    <option>Land</option>
-
-                </select>
-
-                <div class="Select-Location" style="color:whitesmoke">Property Options</div>
-
-                <select class="Rectangle-2236">
-
-                    <option>Buy</option>
-
-                    <option>Rent</option>
-
-                </select>
-
-
-
-
-
+                    <select asp-for="SelectedValue" asp-items="Model.Values" class="Rectangle-2236" style="color:whitesmoke" onchange="this.form.submit()"></select>
+                </form>
 
 
             </div>
@@ -70,7 +128,7 @@
                     {
                         if (images.HouseId == house.Id)
                         {
-
+                            flag = false;
 
                             <div class="big vertical col-9">
 
@@ -90,7 +148,7 @@
 
                                             <div class="rest-name text-muted">@house.PropertyName</div>
 
-                                            <div class="rest-location" style="color:whitesmoke">@house.CityId</div>
+                                            <div class="rest-location" style="color:whitesmoke">@house.PropertyOption</div>
 
                                             <div class="Bakery" style="color:whitesmoke">@house.PropertyType</div>
 
@@ -100,14 +158,18 @@
 
 
                                         <div>
+                                            <form asp-action="AddToCart" asp-route-id="@house.Id" asp-controller="Buyers" method="post">
 
-                                            <div class="abc">
+                                                <div class="abc">
 
-                                                <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
+                                                    <a asp-action="Details" asp-controller="Buyers" asp-route-id="@house.Id" class="button3 btn-dark"><span>Details</span></a>
 
-                                                <a asp-action="Cart" asp-controller="Buyers" class="button3 btn-primary"><span>Add To Cart</span></a>
+                                                    <button type="submit" class="button3 btn-primary">
+                                                        Add to cart
+                                                    </button>
+                                                </div>
+                                            </form>
 
-                                            </div>
 
 
 
@@ -123,6 +185,12 @@
                     }
                 }
             }
+            @if (flag)
+            {
+                <div class="row mt-5">
+                    <h3>Sorry! No Available Properties.</h3>
+                </div>
+            }
 
 
 
@@ -132,9 +200,3 @@
 
 
 
-@if (Model.HouseViewModels.Count <= 0)
-{
-    <div class="row">
-        <h3>Sorry! No Available Properties.</h3>
-    </div>
-}

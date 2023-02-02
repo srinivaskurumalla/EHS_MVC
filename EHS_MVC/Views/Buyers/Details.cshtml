@@ -1,32 +1,77 @@
 ﻿@model SellerDetailsDtoViewModel
+@using Microsoft.AspNetCore.Http;
+
 @{
     ViewData["Title"] = "Details";
+    var isvalid = Context.Session.GetString("token");
 }
 
 
 <div class="row mt-5">
-    <div class="col-md-5">
-        <h1 class="m-5">Property Details</h1>
-        <ul class="list-group">
-            <li class="list-group-item"> <b>Property Name :</b> @Model.HouseDetails.PropertyName</li>
-            <li class="list-group-item"> <b>Property Type :</b>@Model.HouseDetails.PropertyType </li>
-            <li class="list-group-item"> <b>Price Range :</b> @Model.HouseDetails.PriceRange</li>
-            <li class="list-group-item"> <b>City :</b> @Model.HouseDetails.CityName</li>
-            <li class="list-group-item"> <b>Status :</b> @Model.HouseDetails.Status</li>
-            <li class="list-group-item"> <b>Uploaded Date :</b> @Model.HouseDetails.UploadDate.ToShortDateString() </li>
+    <div class="col-5" style="margin-right:-100px">
+        <div class="row">
+            <h1 class="m-5 position-fixed">Property Details</h1>
 
-        </ul>
+        </div>
+        <div class=" mt-5">
+            <ul class="position-fixed list-group" style=" margin-top:100px;margin-left:60px">
+                <li class="list-group-item"> <b>Property Name :</b> @Model.HouseDetails.PropertyName</li>
+                <li class="list-group-item"> <b>Property Type :</b>@Model.HouseDetails.PropertyType </li>
+                <li class="list-group-item"> <b>Price Range :</b> @Model.HouseDetails.PriceRange</li>
+                <li class="list-group-item"> <b>City :</b> @Model.HouseDetails.CityName</li>
+                <li class="list-group-item"> <b>Status :</b> @Model.HouseDetails.Status</li>
+                <li class="list-group-item"> <b>Uploaded Date :</b> @Model.HouseDetails.UploadDate.ToShortDateString() </li>
+            </ul>
+        </div>
+        <div>
+            <a asp-controller="Buyers" asp-action="Index" class="btn btn-danger position-fixed" style="margin-top:480px;margin-left:60px">Back to List</a>
 
-        <a asp-controller="Buyers" asp-action="Index" class="btn btn-danger">Back to List</a>
-    </div>
-    <div class="col-md-5">
-        <h1 class="m-5">Seller Details</h1>
-        <ul>
-            <li class="list-group-item"> <b>Full Name :</b> @Model.SellerDetails.FullName</li>
-            <li class="list-group-item"> <b>Email :</b> @Model.SellerDetails.Email</li>
-            <li class="list-group-item"> <b>Phone :</b> @Model.SellerDetails.PhoneNumber</li>
+        </div>
 
-        </ul>
 
     </div>
+    <div class="col-3 mt-5">
+        @foreach (var items in Model.HouseImages)
+        {
+            if (items.HouseId == Model.HouseDetails.Id)
+            {
+                <div class="big vertical" style="width:30vw;">
+                    <div class="iy card border-secondary mb-3" style="margin-right:65px">
+                        <div class=" vertical">
+
+                            <img class="img" src="@items.ImageUrl" alt="Image supposed to be here" style="margin-top: 22px;">
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    @if (isvalid != null)
+    {
+        <div class="col-md-4" style="padding-left:170px">
+            <h1 class="m-5 position-fixed">Seller Details</h1>
+            <ul class="position-fixed list-group" style="margin-top:150px;margin-left:50px">
+                <li class="list-group-item"> <b>Full Name :</b> @Model.SellerDetails.FullName</li>
+                <li class="list-group-item"> <b>Email :</b> @Model.SellerDetails.Email</li>
+                <li class="list-group-item"> <b>Phone :</b> @Model.SellerDetails.PhoneNumber</li>
+
+            </ul>
+
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4" style="padding-left:120px">
+            <h1 class="m-5 position-fixed" style="padding-left:40px">Seller Details</h1>
+            <ul class="position-fixed list-group" style="margin-top:150px;margin-left:50px">
+                <li class="list-group-item"><h4>Log In To View Owner Details</h4></li>
+            </ul>
+            <div class="position-fixed" style="margin-top:210px">
+                <a asp-controller="Accounts" asp-action="Login" class="btn btn-dark position-fixed" style="margin-left:180px;">Log In</a>
+
+            </div>
+
+        </div>
+    }
+
 </div>
