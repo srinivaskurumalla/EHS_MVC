@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -167,13 +169,13 @@ namespace EHS_MVC.Controllers
           
             using (var client = new HttpClient())
             {
-
+                var reason = Request.Form["reason"];
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
                 //client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
-                var res = await client.PutAsync($"Admins/ApproveHouse/{id}", null);
+                var res = await client.PutAsync($"Admins/ApproveHouse/{id}/{reason}", null);
                 if (res.IsSuccessStatusCode)
                 {
                   
@@ -191,14 +193,17 @@ namespace EHS_MVC.Controllers
 
             using (var client = new HttpClient())
             {
-
+                var reason = Request.Form["reason"]; // read the value of the 'reason' input field
+               
 
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
                 client.BaseAddress = new Uri(_configuration["ApiUrl:api"]);
 
-              //  client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
+                //  client.BaseAddress = new System.Uri(_configuration["ApiUrl:api"]);
 
-                var res = await client.PutAsync($"Admins/RejectHouse/{id}", null);
+                var res = await client.PutAsync($"Admins/RejectHouse/{id}/{reason}", null);
+
+               // var res = await client.PutAsync($"Admins/RejectHouse/{id}", requestBody);
                 if (res.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index", "Admin");

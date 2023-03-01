@@ -5,8 +5,8 @@
 
 
 <div class="row mt-5">
-    <div class="col-md-5">
-        <h1 class="m-5">Property Details</h1>
+    <div class="col-md-5 m-5">
+        <h1 >Property Details</h1>
         <ul class="list-group mb-2">
             <li class="list-group-item"> <b>Property Name :</b> @Model.HouseDetails.PropertyName</li>
             <li class="list-group-item"> <b>Property Type :</b>@Model.HouseDetails.PropertyType </li>
@@ -18,20 +18,32 @@
 
         </ul>
 
-       
-        <div class="btn-group" role="group" aria-label="Basic outlined example m-2">
-            <form method="get" asp-controller="Admin" asp-action="ApproveHouse" asp-route-id="@Model.HouseDetails.Id">
-                <button type="submit" class="btn btn-outline-success">Approve</button>
-            </form>
-            <form method="get" asp-controller="Admin" asp-action="RejectHouse" asp-route-id="@Model.HouseDetails.Id">
-                <button type="submit" class="btn btn-outline-danger">Reject</button>
-            </form>
-          @*  <div class="form-group">
-                <label asp-for="Remarks">Remarks</label>
-                <input type="text" asp-for="Remarks" placeholder="Please write Remarks" class="form-control" />
-                <span asp-validation-for="Remarks" class="text-bg-danger"></span>
+       <div>
 
-            </div>*@
+
+            <form method="post" asp-controller="Admin" asp-action="ApproveHouse" asp-route-id="@Model.HouseDetails.Id">
+                <button type="button" class="btn btn-outline-success" onclick="toggleReason()">Approve</button>
+                <div id="reason" style="display: none;">
+                    <div class="form-group">
+                        <label for="reasonText">Reason for approval:</label>
+                        <input type="text" name="reason" id="reasonText" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+                </div>
+            </form>
+
+            <form method="post" asp-controller="Admin" asp-action="RejectHouse" asp-route-id="@Model.HouseDetails.Id">
+                <button type="button" class="btn btn-outline-danger" onclick="toggleReason()">Reject</button>
+                <div id="reason" style="display: none;">
+                    <div class="form-group">
+                        <label for="reasonText">Reason for rejection:</label>
+                        <input type="text" name="reason" id="reasonText" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-outline-danger">Submit</button>
+                </div>
+            </form>
+
+           
         </div>
 
 
@@ -48,3 +60,10 @@
 
     </div>
 </div>
+
+<script>
+    function toggleReason() {
+        var reasonDiv = event.target.parentElement.querySelector('#reason');
+        reasonDiv.style.display = reasonDiv.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
