@@ -43,6 +43,7 @@ namespace EHS_MVC.Models
 
 
         [Required(ErrorMessage = "Enter Phone Number")]
+        [StringLength(10,MinimumLength =10, ErrorMessage = "Please enter 10 digit mobile number.")]
         //[Phone]
         public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Please enter Full Name")]

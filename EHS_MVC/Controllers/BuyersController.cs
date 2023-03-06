@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,6 +16,8 @@ namespace EHS_MVC.Controllers
     public class BuyersController : Controller
     {
         public string SelectedValue { get; set; }
+        public string PriceRange { get; set; }
+        public string PropertyOption { get; set; }
 
         private readonly IConfiguration _configuration;
         public BuyersController(IConfiguration configuration)
@@ -22,9 +26,11 @@ namespace EHS_MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] string selectedValue = "All")
+        public async Task<IActionResult> Index([FromQuery] string propertyOption,[FromQuery] string selectedValue, [FromQuery] string priceRange = "-1")
         {
             SelectedValue = selectedValue;
+            PriceRange= priceRange;
+            PropertyOption = propertyOption;
             PropertyViewModel propertyViewModel = new();
             List<SellerHouseDetailsViewModel> houses = new();
 
@@ -35,19 +41,38 @@ namespace EHS_MVC.Controllers
                 if (string.IsNullOrEmpty(selectedValue))
                 {
                     selectedValue = "All";
+                    propertyOption = "null";
+                   
                 }
+               
 
 
                 var result = await client.GetAsync($"Buyers/GetHouseByType/{selectedValue}");
                 var tempimages = await client.GetAsync("HouseImages/GetAllHouseImages");
 
-
+                decimal priceInt = Convert.ToDecimal(priceRange); //Convert.ToInt32(priceRange);
                 if (result.IsSuccessStatusCode)
                 {
                     var allImages = await tempimages.Content.ReadAsAsync<List<HouseImage>>();
                     propertyViewModel.HouseImages = allImages;
 
                     houses = await result.Content.ReadAsAsync<List<SellerHouseDetailsViewModel>>();
+                    if (priceInt > 0 && priceInt <30000 )
+                    {
+                        if (priceInt == 1)
+                            priceInt = 0;
+                        houses = houses.FindAll(h => h.PriceRange >= priceInt && h.PriceRange < priceInt + 10000);
+                        
+                    }
+                    if(priceInt == 30000)
+                    {
+                        houses = houses.FindAll(h => h.PriceRange >= priceInt);
+
+                    }
+                    if(propertyOption != "null")
+                    {
+                        houses = houses.FindAll(h => h.PropertyOption == propertyOption);
+                    }
                 }
                 else
                 {
@@ -65,8 +90,24 @@ namespace EHS_MVC.Controllers
                             new SelectListItem { Value = "All", Text = "All" },
                             new SelectListItem { Value = "Villa", Text = "Villa" },
                             new SelectListItem { Value = "Flat", Text = "Flat" },
-                            new SelectListItem { Value = "Bungalow", Text = "Bungalow" }
+                            new SelectListItem { Value = "Bungalow", Text = "Bungalow" },
+                            new SelectListItem { Value = "IndependentHouse", Text = "IndependentHouse" },
                         };
+                propertyViewModel.PriceValues = new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "0" ,Text="--Price--"},
+                    new SelectListItem { Value = "1" ,Text="0-10000"},
+                    new SelectListItem { Value = "10000" ,Text="10000-20000"},
+                    new SelectListItem { Value = "20000" ,Text="20000-30000"},
+                    new SelectListItem { Value = "30000" ,Text="Greater than 30000"},
+                };
+                propertyViewModel.Option = new List<SelectListItem>
+                {
+                    new SelectListItem { Value = "null" ,Text="--Property Type--"},
+                    new SelectListItem { Value = "Sell" ,Text="Sell"},
+                    new SelectListItem { Value = "Rent" ,Text="Rent"},
+                  
+                };
 
             }
 

@@ -6,7 +6,11 @@ namespace EHS_MVC.Models
     public class PropertyViewModel
     {
         public string SelectedValue { get; set; }
+        public decimal PriceRange { get; set; }
+        public string PropertyOption { get; set; }
         public IEnumerable<SelectListItem> Values { get; set; }
+        public IEnumerable<SelectListItem> PriceValues { get; set; }
+        public IEnumerable<SelectListItem>  Option { get; set; }
         public List<SellerHouseDetailsViewModel>  HouseViewModels { get; set; }
         public List<CityViewModel> CityViewModels  { get; set; }
         public int? CityId { get; set; }

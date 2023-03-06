@@ -43,6 +43,7 @@ namespace EHS_MVC.Models
         //Seller Foreign key
         public int UserDetailsId { get; set; }
         public int CityId { get; set; }
+        public int StateId { get; set; }
 
         public string CityName { get; set; }
 

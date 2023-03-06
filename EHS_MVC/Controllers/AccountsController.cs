@@ -160,6 +160,7 @@ namespace EHS_MVC.Controllers
                     {
                         return RedirectToAction("Login");
                     }
+                    ModelState.AddModelError("", "UserName or Email already exist please try with different");
 
                 }
             }

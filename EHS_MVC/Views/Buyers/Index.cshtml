@@ -96,7 +96,7 @@
 <h1></h1>
 <div style="background-color:#002b36">
 
-    <!-- filer option rectangle -->
+    <!-- filter option rectangle -->
     <div class="row">
 
 
@@ -112,12 +112,24 @@
                     <div class="Select-Location" style="color:whitesmoke">Property Type</div>
 
                     <select asp-for="SelectedValue" asp-items="Model.Values" class="Rectangle-2236" style="color:whitesmoke" onchange="this.form.submit()"></select>
+               
+                 <div class="Select-Location" style="color:whitesmoke">Price Range</div>
+
+                    <select asp-for="PriceRange" asp-items="Model.PriceValues" class="Rectangle-2236" style="color:whitesmoke" onchange="this.form.submit()"></select>
+
+                 <div class="Select-Location" style="color:whitesmoke">Property Option</div>
+
+                    <select asp-for="PropertyOption" asp-items="Model.Option" class="Rectangle-2236" style="color:whitesmoke" onchange="this.form.submit()"></select>
+
                 </form>
 
 
             </div>
 
+           
         </div>
+
+
         <div class="big vertical col-9">
             @if (Model.HouseViewModels.Count > 0)
             {
@@ -152,7 +164,7 @@
 
                                             <div class="Bakery" style="color:whitesmoke">@house.PropertyType</div>
 
-                                            <div class="Bakery" style="color:whitesmoke">Rate: &#8377 @house.InitialDeposit</div>
+                                            <div class="Bakery" style="color:whitesmoke">Rate: &#8377 @house.PriceRange</div>
 
                                         </div>
 
